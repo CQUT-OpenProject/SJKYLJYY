@@ -1,0 +1,970 @@
+{
+  "database": "SuperMarket_EXP_4",
+  "environment": {
+    "sql": "SELECT VERSION() AS version,CURRENT_DATE() AS execution_date,\nYEAR(CURRENT_DATE()) AS age_reference_year,@@sql_mode AS sql_mode;",
+    "exit_code": 0,
+    "stdout": "version\texecution_date\tage_reference_year\tsql_mode\n8.4.11\t2026-10-11\t2026\tONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION\n",
+    "stderr": "",
+    "columns": [
+      "version",
+      "execution_date",
+      "age_reference_year",
+      "sql_mode"
+    ],
+    "rows": [
+      [
+        "8.4.11",
+        "2026-10-11",
+        "2026",
+        "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+      ]
+    ]
+  },
+  "tasks": [
+    {
+      "number": 1,
+      "title": "定义 MIS 专业学生视图 V_MIS 并查询",
+      "analysis": "采用简单单表视图，不加 WITH CHECK OPTION，便于观察后续插入 IT 学生的行为。初始可见徐好、伍民。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_MIS AS SELECT * FROM Student WHERE Major='MIS';",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM V_MIS ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tMajor\nS02\t徐好\tMIS\nS03\t伍民\tMIS\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Major"
+          ],
+          "rows": [
+            [
+              "S02",
+              "徐好",
+              "MIS"
+            ],
+            [
+              "S03",
+              "伍民",
+              "MIS"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "定义学生购买商品信息视图 V_SSG 并查询",
+      "analysis": "视图将学生、销售和商品关联，返回 6 条记录；每列名称唯一。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_SSG AS\nSELECT s.SNO,s.SName,g.GoodsName,g.SalePrice,b.Number\nFROM Student AS s JOIN SaleBill AS b ON b.SNO=s.SNO\nJOIN Goods AS g ON g.GoodsNO=b.GoodsNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT * FROM V_SSG ORDER BY SNO,GoodsName;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tGoodsName\tSalePrice\tNumber\nS01\t李明\t优乐美奶茶\t3.50\t3\nS02\t徐好\t优乐美奶茶\t3.50\t1\nS02\t徐好\t雀巢咖啡\t5.80\t2\nS03\t伍民\t优乐美奶茶\t3.50\t1\nS05\t张小红\t雀巢咖啡\t5.80\t2\nS05\t张小红\t飘柔洗发水\t19.80\t1\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "GoodsName",
+            "SalePrice",
+            "Number"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "优乐美奶茶",
+              "3.50",
+              "3"
+            ],
+            [
+              "S02",
+              "徐好",
+              "优乐美奶茶",
+              "3.50",
+              "1"
+            ],
+            [
+              "S02",
+              "徐好",
+              "雀巢咖啡",
+              "5.80",
+              "2"
+            ],
+            [
+              "S03",
+              "伍民",
+              "优乐美奶茶",
+              "3.50",
+              "1"
+            ],
+            [
+              "S05",
+              "张小红",
+              "雀巢咖啡",
+              "5.80",
+              "2"
+            ],
+            [
+              "S05",
+              "张小红",
+              "飘柔洗发水",
+              "19.80",
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "定义学生年龄视图 V_AGE 并查询",
+      "analysis": "年历年龄由当前年份减出生年份计算，当前年份为 2026。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_AGE AS SELECT SNO,SName,College,Major,\nYEAR(CURRENT_DATE())-BirthYear AS Age FROM Student;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Age FROM V_AGE ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tAge\nS01\t李明\t27\nS02\t徐好\t28\nS03\t伍民\t30\nS04\t闵红\t29\nS05\t张小红\t29\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Age"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "27"
+            ],
+            [
+              "S02",
+              "徐好",
+              "28"
+            ],
+            [
+              "S03",
+              "伍民",
+              "30"
+            ],
+            [
+              "S04",
+              "闵红",
+              "29"
+            ],
+            [
+              "S05",
+              "张小红",
+              "29"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "定义学院人数及平均年龄视图 V_COM 并查询",
+      "analysis": "包含 GROUP BY 和聚合函数，属于不可更新视图。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_COM AS SELECT College,COUNT(*) AS StudentCount,\nCAST(AVG(YEAR(CURRENT_DATE())-BirthYear) AS DECIMAL(6,2)) AS AvgAge\nFROM Student GROUP BY College;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT * FROM V_COM ORDER BY College;",
+          "exit_code": 0,
+          "stdout": "College\tStudentCount\tAvgAge\nACC\t2\t29.00\nCS\t3\t28.33\n",
+          "stderr": "",
+          "columns": [
+            "College",
+            "StudentCount",
+            "AvgAge"
+          ],
+          "rows": [
+            [
+              "ACC",
+              "2",
+              "29.00"
+            ],
+            [
+              "CS",
+              "3",
+              "28.33"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "定义学生购买种类及消费总额视图 V_S_CONSUME",
+      "analysis": "使用 COUNT(DISTINCT GoodsNO) 统计种类，数量乘当前商品售价计算消费额。样本没有保存历史成交价，因此不能把此值视为历史实付金额。未购买者消费额为 0。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_S_CONSUME AS\nSELECT s.SNO,s.SName,s.College,COUNT(DISTINCT b.GoodsNO) AS GoodsKinds,\nCAST(COALESCE(SUM(b.Number*g.SalePrice),0) AS DECIMAL(12,2)) AS CostTotal\nFROM Student AS s LEFT JOIN SaleBill AS b ON b.SNO=s.SNO\nLEFT JOIN Goods AS g ON g.GoodsNO=b.GoodsNO\nGROUP BY s.SNO,s.SName,s.College;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT * FROM V_S_CONSUME ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\tGoodsKinds\tCostTotal\nS01\t李明\tCS\t1\t10.50\nS02\t徐好\tCS\t2\t15.10\nS03\t伍民\tCS\t1\t3.50\nS04\t闵红\tACC\t0\t0.00\nS05\t张小红\tACC\t2\t31.40\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College",
+            "GoodsKinds",
+            "CostTotal"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "CS",
+              "1",
+              "10.50"
+            ],
+            [
+              "S02",
+              "徐好",
+              "CS",
+              "2",
+              "15.10"
+            ],
+            [
+              "S03",
+              "伍民",
+              "CS",
+              "1",
+              "3.50"
+            ],
+            [
+              "S04",
+              "闵红",
+              "ACC",
+              "0",
+              "0.00"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC",
+              "2",
+              "31.40"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "定义类别商品总数平均售价及最小库存视图 V_GOODS",
+      "analysis": "商品总数在本题按商品种类条数 COUNT(GoodsNO) 理解；平均价格和最小库存按对应商品计算。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_GOODS AS\nSELECT c.CategoryNO,c.CategoryName,COUNT(g.GoodsNO) AS GoodsCount,\nCAST(AVG(g.SalePrice) AS DECIMAL(10,2)) AS AvgPrice,\nMIN(g.Number) AS MinStock\nFROM Category AS c LEFT JOIN Goods AS g ON g.CategoryNO=c.CategoryNO\nGROUP BY c.CategoryNO,c.CategoryName;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT * FROM V_GOODS ORDER BY CategoryNO;",
+          "exit_code": 0,
+          "stdout": "CategoryNO\tCategoryName\tGoodsCount\tAvgPrice\tMinStock\nCN001\t咖啡\t2\t4.65\t50\nCN002\t洗发水\t1\t19.80\t65\nCN005\t床上用品\t1\t150.00\t28\n",
+          "stderr": "",
+          "columns": [
+            "CategoryNO",
+            "CategoryName",
+            "GoodsCount",
+            "AvgPrice",
+            "MinStock"
+          ],
+          "rows": [
+            [
+              "CN001",
+              "咖啡",
+              "2",
+              "4.65",
+              "50"
+            ],
+            [
+              "CN002",
+              "洗发水",
+              "1",
+              "19.80",
+              "65"
+            ],
+            [
+              "CN005",
+              "床上用品",
+              "1",
+              "150.00",
+              "28"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "定义供应商商品数库存和平均进价视图 V_SU_GOOD",
+      "analysis": "按供应商聚合，平均进价超过 10 元者为飞鹤食品和缙云日化；同时保留联系方式，满足第 10 项查询。",
+      "results": [
+        {
+          "sql": "CREATE VIEW V_SU_GOOD AS\nSELECT s.SupplierNO,s.SupplierName,s.Number AS Phone,s.Address,\nCOUNT(g.GoodsNO) AS GoodsCount,SUM(g.Number) AS StockTotal,\nCAST(AVG(g.InPrice) AS DECIMAL(10,2)) AS AvgInPrice\nFROM Supplier AS s JOIN Goods AS g ON g.SupplierNO=s.SupplierNO\nGROUP BY s.SupplierNO,s.SupplierName,s.Number,s.Address\nHAVING AVG(g.InPrice)>10;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SupplierNO,SupplierName,GoodsCount,StockTotal,AvgInPrice\nFROM V_SU_GOOD ORDER BY SupplierNO;",
+          "exit_code": 0,
+          "stdout": "SupplierNO\tSupplierName\tGoodsCount\tStockTotal\tAvgInPrice\nsup003\t飞鹤食品\t1\t65\t15.00\nsup005\t缙云日化\t1\t28\t120.00\n",
+          "stderr": "",
+          "columns": [
+            "SupplierNO",
+            "SupplierName",
+            "GoodsCount",
+            "StockTotal",
+            "AvgInPrice"
+          ],
+          "rows": [
+            [
+              "sup003",
+              "飞鹤食品",
+              "1",
+              "65",
+              "15.00"
+            ],
+            [
+              "sup005",
+              "缙云日化",
+              "1",
+              "28",
+              "120.00"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "通过 V_COM 查询平均年龄十九以上的学院",
+      "analysis": "两个学院均满足条件。",
+      "results": [
+        {
+          "sql": "SELECT * FROM V_COM WHERE AvgAge>19 ORDER BY College;",
+          "exit_code": 0,
+          "stdout": "College\tStudentCount\tAvgAge\nACC\t2\t29.00\nCS\t3\t28.33\n",
+          "stderr": "",
+          "columns": [
+            "College",
+            "StudentCount",
+            "AvgAge"
+          ],
+          "rows": [
+            [
+              "ACC",
+              "2",
+              "29.00"
+            ],
+            [
+              "CS",
+              "3",
+              "28.33"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "通过 V_S_CONSUME 查询消费总额超过二百的学生",
+      "analysis": "最大消费额为 31.40，返回空集。",
+      "results": [
+        {
+          "sql": "SELECT * FROM V_S_CONSUME WHERE CostTotal>200 ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "通过 V_SU_GOOD 查询库存总数小于五十的供应商",
+      "analysis": "返回缙云日化的名称、电话和地址。",
+      "results": [
+        {
+          "sql": "SELECT SupplierName,Phone,Address FROM V_SU_GOOD\nWHERE StockTotal<50 ORDER BY SupplierNO;",
+          "exit_code": 0,
+          "stdout": "SupplierName\tPhone\tAddress\n缙云日化\t19648768903\t重庆北碚\n",
+          "stderr": "",
+          "columns": [
+            "SupplierName",
+            "Phone",
+            "Address"
+          ],
+          "rows": [
+            [
+              "缙云日化",
+              "19648768903",
+              "重庆北碚"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "通过 V_MIS 插入宋江并查询",
+      "analysis": "宋江专业为 MIS，插入 1 行且在视图中可见。题目未给出性别，原始恢复结构允许 Gender 为空，不推测性别。",
+      "results": [
+        {
+          "sql": "INSERT INTO V_MIS (SNO,SName,BirthYear,College,Major,WeiXin)\nVALUES ('s09','宋江',2000,'CS','MIS','wx009');\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM V_MIS WHERE SNO='s09';",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tMajor\ns09\t宋江\tMIS\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Major"
+          ],
+          "rows": [
+            [
+              "s09",
+              "宋江",
+              "MIS"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "通过 V_MIS 插入周瑜并查询",
+      "analysis": "没有 CHECK OPTION 时，IT 学生可通过可插入视图写入基表，但不满足 MIS 筛选，查询该视图看不到记录。",
+      "results": [
+        {
+          "sql": "INSERT INTO V_MIS (SNO,SName,BirthYear,College,Major,WeiXin)\nVALUES ('s10','周瑜',1999,'CS','IT','wx010');\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM V_MIS WHERE SNO='s10';",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM Student WHERE SNO='s10';",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tMajor\ns10\t周瑜\tIT\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Major"
+          ],
+          "rows": [
+            [
+              "s10",
+              "周瑜",
+              "IT"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "通过 V_MIS 将 s01 的姓名改为李欢欢",
+      "analysis": "S01 为 IT 专业，视图不可见，因此更新成功但影响 0 行，基表仍为李明。",
+      "results": [
+        {
+          "sql": "UPDATE V_MIS SET SName='李欢欢' WHERE SNO='s01';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n0\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM Student WHERE SNO='s01';",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tMajor\nS01\t李明\tIT\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Major"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "IT"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "通过 V_MIS 将 s02 的姓名改为徐慧慧",
+      "analysis": "S02 为 MIS，修改影响 1 行，基表和视图均反映新姓名。",
+      "results": [
+        {
+          "sql": "UPDATE V_MIS SET SName='徐慧慧' WHERE SNO='s02';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName FROM V_MIS WHERE SNO='s02';",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\nS02\t徐慧慧\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName"
+          ],
+          "rows": [
+            [
+              "S02",
+              "徐慧慧"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "通过 V_SSG 将力神咖啡售价改为十元",
+      "analysis": "原始素材没有力神咖啡，更新影响 0 行。这不表示连接视图不能更新；另用事务内临时商品和销售记录验证，单独修改 Goods.SalePrice 可以成功，补充数据随后回滚。",
+      "results": [
+        {
+          "sql": "UPDATE V_SSG SET SalePrice=10 WHERE GoodsName='力神咖啡';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n0\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsName,SalePrice FROM V_SSG WHERE GoodsName='力神咖啡';",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "title": "通过 V_MIS 删除 s09",
+      "analysis": "宋江为 MIS，可见且没有被销售记录引用，删除影响 1 行，基表也不再存在。",
+      "results": [
+        {
+          "sql": "DELETE FROM V_MIS WHERE SNO='s09';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO FROM Student WHERE SNO='s09';",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "title": "通过 V_MIS 删除 s10",
+      "analysis": "周瑜属于 IT，不能从 MIS 视图匹配，因此删除影响 0 行，基表仍保留该学生。",
+      "results": [
+        {
+          "sql": "DELETE FROM V_MIS WHERE SNO='s10';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n0\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,Major FROM Student WHERE SNO='s10';",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tMajor\ns10\t周瑜\tIT\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Major"
+          ],
+          "rows": [
+            [
+              "s10",
+              "周瑜",
+              "IT"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "join-view-update-positive",
+      "sql": "START TRANSACTION;\nINSERT INTO Goods VALUES\n('GNTEST','sup001','CN001','力神咖啡',5,8,1,'2026-10-11');\nINSERT INTO SaleBill VALUES ('GNTEST','S01','2026-10-11',1);\nUPDATE V_SSG SET SalePrice=10 WHERE GoodsName='力神咖啡';\nSELECT SalePrice FROM Goods WHERE GoodsNO='GNTEST';\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "SalePrice\n10.00\n",
+      "stderr": "",
+      "columns": [
+        "SalePrice"
+      ],
+      "rows": [
+        [
+          "10.00"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "join-view-fixture-rolled-back",
+      "sql": "SELECT COUNT(*) FROM Goods WHERE GoodsNO='GNTEST';",
+      "exit_code": 0,
+      "stdout": "COUNT(*)\n0\n",
+      "stderr": "",
+      "columns": [
+        "COUNT(*)"
+      ],
+      "rows": [
+        [
+          "0"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "check-option-view-create",
+      "sql": "CREATE VIEW V_MIS_CHECK AS SELECT * FROM Student WHERE Major='MIS' WITH CHECK OPTION;",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "columns": [],
+      "rows": [],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "check-option-rejects-it",
+      "sql": "INSERT INTO V_MIS_CHECK (SNO,SName,BirthYear,College,Major,WeiXin) VALUES ('s11','检查测试',2000,'CS','IT','wx011');",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "ERROR 1369 (HY000) at line 1: CHECK OPTION failed 'supermarket_exp_4.v_mis_check'\n",
+      "columns": [],
+      "rows": [],
+      "expected_error": 1369,
+      "verified": true
+    },
+    {
+      "name": "check-option-view-drop",
+      "sql": "DROP VIEW V_MIS_CHECK;",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "columns": [],
+      "rows": [],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "aggregate-view-update-rejected",
+      "sql": "UPDATE V_COM SET StudentCount=10 WHERE College='CS';",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "ERROR 1288 (HY000) at line 1: The target table V_COM of the UPDATE is not updatable\n",
+      "columns": [],
+      "rows": [],
+      "expected_error": 1288,
+      "verified": true
+    },
+    {
+      "name": "view-updatability-metadata",
+      "sql": "SELECT TABLE_NAME,IS_UPDATABLE FROM information_schema.VIEWS WHERE TABLE_SCHEMA=DATABASE() ORDER BY TABLE_NAME;",
+      "exit_code": 0,
+      "stdout": "TABLE_NAME\tIS_UPDATABLE\nv_age\tYES\nv_com\tNO\nv_goods\tNO\nv_mis\tYES\nv_s_consume\tNO\nv_ssg\tYES\nv_su_good\tNO\n",
+      "stderr": "",
+      "columns": [
+        "TABLE_NAME",
+        "IS_UPDATABLE"
+      ],
+      "rows": [
+        [
+          "v_age",
+          "YES"
+        ],
+        [
+          "v_com",
+          "NO"
+        ],
+        [
+          "v_goods",
+          "NO"
+        ],
+        [
+          "v_mis",
+          "YES"
+        ],
+        [
+          "v_s_consume",
+          "NO"
+        ],
+        [
+          "v_ssg",
+          "YES"
+        ],
+        [
+          "v_su_good",
+          "NO"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "final-student-state",
+      "sql": "SELECT SNO,SName,Major FROM Student ORDER BY SNO;",
+      "exit_code": 0,
+      "stdout": "SNO\tSName\tMajor\nS01\t李明\tIT\nS02\t徐慧慧\tMIS\nS03\t伍民\tMIS\nS04\t闵红\tAC\nS05\t张小红\tAC\ns10\t周瑜\tIT\n",
+      "stderr": "",
+      "columns": [
+        "SNO",
+        "SName",
+        "Major"
+      ],
+      "rows": [
+        [
+          "S01",
+          "李明",
+          "IT"
+        ],
+        [
+          "S02",
+          "徐慧慧",
+          "MIS"
+        ],
+        [
+          "S03",
+          "伍民",
+          "MIS"
+        ],
+        [
+          "S04",
+          "闵红",
+          "AC"
+        ],
+        [
+          "S05",
+          "张小红",
+          "AC"
+        ],
+        [
+          "s10",
+          "周瑜",
+          "IT"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    }
+  ],
+  "final_counts": [
+    [
+      "Category",
+      "3"
+    ],
+    [
+      "Supplier",
+      "5"
+    ],
+    [
+      "Student",
+      "6"
+    ],
+    [
+      "Goods",
+      "4"
+    ],
+    [
+      "SaleBill",
+      "6"
+    ]
+  ]
+}

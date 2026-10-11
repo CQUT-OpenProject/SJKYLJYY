@@ -1,0 +1,56 @@
+{
+  "five_tables": {
+    "sql": "SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_SCHEMA='SuperMarket';",
+    "expected": "5",
+    "actual": "5",
+    "passed": true
+  },
+  "four_foreign_keys": {
+    "sql": "SELECT COUNT(*) FROM information_schema.REFERENTIAL_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='SuperMarket';",
+    "expected": "4",
+    "actual": "4",
+    "passed": true
+  },
+  "birthyear_removed": {
+    "sql": "SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Student' AND COLUMN_NAME='BirthYear';",
+    "expected": "0",
+    "actual": "0",
+    "passed": true
+  },
+  "qgperiod_int_nullable": {
+    "sql": "SELECT CONCAT(DATA_TYPE,':',IS_NULLABLE) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Goods' AND COLUMN_NAME='QGperiod';",
+    "expected": "int:YES",
+    "actual": "int:YES",
+    "passed": true
+  },
+  "inprice_decimal": {
+    "sql": "SELECT CONCAT(COLUMN_TYPE,':',IS_NULLABLE) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Goods' AND COLUMN_NAME='InPrice';",
+    "expected": "decimal(10,1):NO",
+    "actual": "decimal(10,1):NO",
+    "passed": true
+  },
+  "student_unique_removed": {
+    "sql": "SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Student' AND INDEX_NAME='uq_student_weixin';",
+    "expected": "0",
+    "actual": "0",
+    "passed": true
+  },
+  "supplier_index_removed": {
+    "sql": "SELECT COUNT(*) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Supplier' AND INDEX_NAME='uq_supplier_no';",
+    "expected": "0",
+    "actual": "0",
+    "passed": true
+  },
+  "category_index_directions": {
+    "sql": "SELECT GROUP_CONCAT(CONCAT(COLUMN_NAME,':',COLLATION,':',NON_UNIQUE) ORDER BY SEQ_IN_INDEX) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='SuperMarket' AND TABLE_NAME='Category' AND INDEX_NAME='uq_category_no_name';",
+    "expected": "CategoryNO:A:0,CategoryName:D:0",
+    "actual": "CategoryNO:A:0,CategoryName:D:0",
+    "passed": true
+  },
+  "only_new_range_check": {
+    "sql": "SELECT GROUP_CONCAT(CONSTRAINT_NAME) FROM information_schema.CHECK_CONSTRAINTS WHERE CONSTRAINT_SCHEMA='SuperMarket';",
+    "expected": "chk_salebill_range",
+    "actual": "chk_salebill_range",
+    "passed": true
+  }
+}

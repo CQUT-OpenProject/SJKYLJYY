@@ -1,0 +1,9 @@
+SQL:
+SELECT CAST(AVG(g.SalePrice) AS DECIMAL(10,2)) AS AvgPrice
+FROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO
+WHERE c.CategoryName='咖啡';
+EXIT: 0
+STDOUT:
+AvgPrice
+4.65
+STDERR:

@@ -1,0 +1,32 @@
+USE SuperMarket;
+CREATE UNIQUE INDEX uq_supplier_no ON Supplier (SupplierNO);
+-- 主码已经唯一；本索引用于演示题目要求的创建与删除。
+SHOW INDEX FROM Supplier;
+
+
+--------------
+CREATE UNIQUE INDEX uq_supplier_no ON Supplier (SupplierNO)
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+-- 主码已经唯一；本索引用于演示题目要求的创建与删除。
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SHOW INDEX FROM Supplier
+--------------
+
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Supplier |          0 | PRIMARY        |            1 | SupplierNO  | A         |           5 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Supplier |          0 | uq_supplier_no |            1 | SupplierNO  | A         |           1 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set
+
+Bye

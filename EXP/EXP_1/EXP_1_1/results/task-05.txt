@@ -1,0 +1,35 @@
+USE SuperMarket;
+CREATE TABLE Category (
+  CategoryNO VARCHAR(8) NOT NULL,
+  CategoryName VARCHAR(30) NOT NULL,
+  Descriptions VARCHAR(200),
+  CONSTRAINT pk_category PRIMARY KEY (CategoryNO)
+) ENGINE=InnoDB;
+SHOW COLUMNS FROM Category;
+
+
+--------------
+CREATE TABLE Category (
+  CategoryNO VARCHAR(8) NOT NULL,
+  CategoryName VARCHAR(30) NOT NULL,
+  Descriptions VARCHAR(200),
+  CONSTRAINT pk_category PRIMARY KEY (CategoryNO)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SHOW COLUMNS FROM Category
+--------------
+
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| CategoryNO   | varchar(8)   | NO   | PRI | NULL    |       |
+| CategoryName | varchar(30)  | NO   |     | NULL    |       |
+| Descriptions | varchar(200) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+3 rows in set
+
+Bye

@@ -1,0 +1,12 @@
+SQL:
+SELECT SNO,SName,Major FROM Student ORDER BY SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	Major
+S01	李明	IT
+S02	徐慧慧	MIS
+S03	伍民	MIS
+S04	闵红	AC
+S05	张小红	AC
+s10	周瑜	IT
+STDERR:

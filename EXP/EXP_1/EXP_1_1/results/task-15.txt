@@ -1,0 +1,24 @@
+USE SuperMarket;
+DROP INDEX uq_supplier_no ON Supplier;
+SHOW INDEX FROM Supplier;
+
+
+--------------
+DROP INDEX uq_supplier_no ON Supplier
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW INDEX FROM Supplier
+--------------
+
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Supplier |          0 | PRIMARY  |            1 | SupplierNO  | A         |           5 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set
+
+Bye

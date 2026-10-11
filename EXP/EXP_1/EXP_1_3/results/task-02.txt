@@ -1,0 +1,7 @@
+SQL:
+SELECT * FROM Goods WHERE CategoryNO='cn002' ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	SupplierNO	CategoryNO	GoodsName	InPrice	SalePrice	Number	ProductTime
+GN0005	sup003	CN002	飘柔洗发水	15.0	19.80	65	2019-05-29
+STDERR:

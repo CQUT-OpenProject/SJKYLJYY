@@ -1,0 +1,25 @@
+CREATE DATABASE SuperMarket
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE SuperMarket;
+SELECT DATABASE() AS current_database;
+
+
+--------------
+CREATE DATABASE SuperMarket
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci
+--------------
+
+Query OK, 1 row affected
+
+--------------
+SELECT DATABASE() AS current_database
+--------------
+
++------------------+
+| current_database |
++------------------+
+| supermarket      |
++------------------+
+1 row in set
+
+Bye

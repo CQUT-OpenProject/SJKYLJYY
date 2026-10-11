@@ -1,0 +1,25 @@
+SQL:
+UPDATE Goods AS g
+JOIN (SELECT GoodsNO FROM SaleBill
+      WHERE HappenTime >= '2020-01-01' AND HappenTime < '2021-01-01'
+      GROUP BY GoodsNO HAVING SUM(Number)<3) AS t
+  ON t.GoodsNO=g.GoodsNO
+SET g.SalePrice=ROUND(g.SalePrice*0.8,2);
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT GoodsNO,SalePrice FROM Goods ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	SalePrice
+GN0001	3.68
+GN0002	6.09
+GN0005	16.63
+GN0007	157.50
+STDERR:

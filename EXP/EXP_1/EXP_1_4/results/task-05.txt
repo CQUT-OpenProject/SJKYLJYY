@@ -1,0 +1,23 @@
+SQL:
+CREATE VIEW V_S_CONSUME AS
+SELECT s.SNO,s.SName,s.College,COUNT(DISTINCT b.GoodsNO) AS GoodsKinds,
+CAST(COALESCE(SUM(b.Number*g.SalePrice),0) AS DECIMAL(12,2)) AS CostTotal
+FROM Student AS s LEFT JOIN SaleBill AS b ON b.SNO=s.SNO
+LEFT JOIN Goods AS g ON g.GoodsNO=b.GoodsNO
+GROUP BY s.SNO,s.SName,s.College;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT * FROM V_S_CONSUME ORDER BY SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College	GoodsKinds	CostTotal
+S01	李明	CS	1	10.50
+S02	徐好	CS	2	15.10
+S03	伍民	CS	1	3.50
+S04	闵红	ACC	0	0.00
+S05	张小红	ACC	2	31.40
+STDERR:

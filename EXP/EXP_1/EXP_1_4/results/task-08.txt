@@ -1,0 +1,8 @@
+SQL:
+SELECT * FROM V_COM WHERE AvgAge>19 ORDER BY College;
+EXIT: 0
+STDOUT:
+College	StudentCount	AvgAge
+ACC	2	29.00
+CS	3	28.33
+STDERR:

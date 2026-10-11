@@ -1,0 +1,9 @@
+SQL:
+SELECT GoodsNO,SUM(Number) AS SaleTotal FROM SaleBill
+WHERE HappenTime>='2018-01-01' AND HappenTime<'2019-01-01'
+GROUP BY GoodsNO ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	SaleTotal
+GN0002	2
+STDERR:

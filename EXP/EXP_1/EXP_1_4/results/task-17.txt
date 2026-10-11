@@ -1,0 +1,17 @@
+SQL:
+DELETE FROM V_MIS WHERE SNO='s10';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+0
+STDERR:
+
+
+SQL:
+SELECT SNO,SName,Major FROM Student WHERE SNO='s10';
+EXIT: 0
+STDOUT:
+SNO	SName	Major
+s10	周瑜	IT
+STDERR:

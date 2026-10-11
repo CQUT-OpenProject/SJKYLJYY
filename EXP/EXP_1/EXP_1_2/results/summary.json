@@ -1,0 +1,593 @@
+{
+  "database": "SuperMarket_EXP_2",
+  "environment": {
+    "sql": "SELECT VERSION() AS version,CURRENT_DATE() AS execution_date,\nYEAR(CURRENT_DATE()) AS age_reference_year,@@sql_mode AS sql_mode;",
+    "exit_code": 0,
+    "stdout": "version\texecution_date\tage_reference_year\tsql_mode\n8.4.11\t2026-10-11\t2026\tONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION\n",
+    "stderr": "",
+    "columns": [
+      "version",
+      "execution_date",
+      "age_reference_year",
+      "sql_mode"
+    ],
+    "rows": [
+      [
+        "8.4.11",
+        "2026-10-11",
+        "2026",
+        "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+      ]
+    ]
+  },
+  "tasks": [
+    {
+      "number": 1,
+      "title": "将五张表的样本数据导入数据库",
+      "analysis": "按父表、子表的依赖顺序导入。各表行数依次为 3、5、5、4、6。",
+      "results": [
+        {
+          "sql": "-- 原始五表样本；销售商品号统一到 Goods 主码。\nINSERT INTO Category (CategoryNO, CategoryName, Descriptions) VALUES\n ('CN001', '咖啡', '速溶咖啡，袋装咖啡，咖啡粉'),\n ('CN002', '洗发水', '袋装、瓶装洗发水'),\n ('CN005', '床上用品', '被套，枕套，床单');\nINSERT INTO Supplier (SupplierNO, SupplierName, Address, Number) VALUES\n ('sup001', '卡夫食品', '广东佛山', '12348768900'),\n ('sup002', '久润食品', '广东东莞', '13248768901'),\n ('sup003', '飞鹤食品', '重庆解放碑', '12648768901'),\n ('sup004', '南山日化', '重庆南坪', '11648768903'),\n ('sup005', '缙云日化', '重庆北碚', '19648768903');\nINSERT INTO Student (SNO, SName, BirthYear, Gender, College, Major, WeiXin) VALUES\n ('S01', '李明', 1999, '男', 'CS', 'IT', 'wx001'),\n ('S02', '徐好', 1998, '女', 'CS', 'MIS', 'wx002'),\n ('S03', '伍民', 1996, '男', 'CS', 'MIS', 'wx003'),\n ('S04', '闵红', 1997, '女', 'ACC', 'AC', 'wx004'),\n ('S05', '张小红', 1997, '女', 'ACC', 'AC', 'wx005');\nINSERT INTO Goods\n (GoodsNO, SupplierNO, CategoryNO, GoodsName,\n  InPrice, SalePrice, Number, ProductTime) VALUES\n ('GN0001', 'sup001', 'CN001', '优乐美奶茶', 2.5, 3.5, 100, '2019-12-20'),\n ('GN0002', 'sup002', 'CN001', '雀巢咖啡', 4, 5.8, 50, '2017-06-08'),\n ('GN0005', 'sup003', 'CN002', '飘柔洗发水', 15, 19.8, 65, '2019-05-29'),\n ('GN0007', 'sup005', 'CN005', '小绵羊被套', 120, 150, 28, '2019-11-22');\nINSERT INTO SaleBill (GoodsNO, SNO, HappenTime, Number) VALUES\n ('GN0001', 'S01', '2020-06-09', 3),\n ('GN0001', 'S02', '2020-05-03', 1),\n ('GN0001', 'S03', '2020-04-07', 1),\n ('GN0002', 'S02', '2018-05-08', 2),\n ('GN0002', 'S05', '2019-06-26', 2),\n ('GN0005', 'S05', '2020-06-01', 1);\n\nSELECT 'Category' AS table_name,COUNT(*) AS rows_count FROM Category\nUNION ALL SELECT 'Supplier',COUNT(*) FROM Supplier\nUNION ALL SELECT 'Student',COUNT(*) FROM Student\nUNION ALL SELECT 'Goods',COUNT(*) FROM Goods\nUNION ALL SELECT 'SaleBill',COUNT(*) FROM SaleBill;",
+          "exit_code": 0,
+          "stdout": "table_name\trows_count\nCategory\t3\nSupplier\t5\nStudent\t5\nGoods\t4\nSaleBill\t6\n",
+          "stderr": "",
+          "columns": [
+            "table_name",
+            "rows_count"
+          ],
+          "rows": [
+            [
+              "Category",
+              "3"
+            ],
+            [
+              "Supplier",
+              "5"
+            ],
+            [
+              "Student",
+              "5"
+            ],
+            [
+              "Goods",
+              "4"
+            ],
+            [
+              "SaleBill",
+              "6"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "将雀巢咖啡改名为雀巢咖啡条装",
+      "analysis": "修改了 GN0002 的商品名，影响 1 行。",
+      "results": [
+        {
+          "sql": "UPDATE Goods SET GoodsName='雀巢咖啡条装' WHERE GoodsName='雀巢咖啡';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsNO,GoodsName FROM Goods WHERE GoodsNO='GN0002';",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\nGN0002\t雀巢咖啡条装\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName"
+          ],
+          "rows": [
+            [
+              "GN0002",
+              "雀巢咖啡条装"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "将所有商品的售价提升百分之五",
+      "analysis": "更新四件商品，DECIMAL(10,2) 保存两位小数。",
+      "results": [
+        {
+          "sql": "UPDATE Goods SET SalePrice=ROUND(SalePrice*1.05,2);\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n4\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "4"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsNO,SalePrice FROM Goods ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSalePrice\nGN0001\t3.68\nGN0002\t6.09\nGN0005\t20.79\nGN0007\t157.50\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SalePrice"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "3.68"
+            ],
+            [
+              "GN0002",
+              "6.09"
+            ],
+            [
+              "GN0005",
+              "20.79"
+            ],
+            [
+              "GN0007",
+              "157.50"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "将类别号 CN005 改为 CN004",
+      "analysis": "直接修改被 GN0007 引用的父表主码，返回 ERROR 1451。外键采用默认 RESTRICT，不允许留下无效引用；类别号保持 CN005。若业务确需变更，可设计 ON UPDATE CASCADE，或在事务内新增父记录、迁移子表引用后删除旧父记录。",
+      "results": [
+        {
+          "sql": "UPDATE Category SET CategoryNO='CN004' WHERE CategoryNO='CN005';",
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "ERROR 1451 (23000) at line 1: Cannot delete or update a parent row: a foreign key constraint fails (`supermarket_exp_2`.`goods`, CONSTRAINT `fk_goods_category` FOREIGN KEY (`CategoryNO`) REFERENCES `category` (`CategoryNO`))\n",
+          "columns": [],
+          "rows": [],
+          "expected_error": 1451,
+          "verified": true
+        },
+        {
+          "sql": "SELECT CategoryNO FROM Category WHERE CategoryNO IN ('CN004','CN005');",
+          "exit_code": 0,
+          "stdout": "CategoryNO\nCN005\n",
+          "stderr": "",
+          "columns": [
+            "CategoryNO"
+          ],
+          "rows": [
+            [
+              "CN005"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "将 2020 年销售总数量小于三的商品售价打八折",
+      "analysis": "“销售数量”按该商品 2020 年合计销量理解，只包含该年确有销售记录的商品。GN0001 的年销量为 5，不打折；GN0005 为 1，按前题提升后的售价计算，结果为 16.63。",
+      "results": [
+        {
+          "sql": "UPDATE Goods AS g\nJOIN (SELECT GoodsNO FROM SaleBill\n      WHERE HappenTime >= '2020-01-01' AND HappenTime < '2021-01-01'\n      GROUP BY GoodsNO HAVING SUM(Number)<3) AS t\n  ON t.GoodsNO=g.GoodsNO\nSET g.SalePrice=ROUND(g.SalePrice*0.8,2);\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsNO,SalePrice FROM Goods ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSalePrice\nGN0001\t3.68\nGN0002\t6.09\nGN0005\t16.63\nGN0007\t157.50\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SalePrice"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "3.68"
+            ],
+            [
+              "GN0002",
+              "6.09"
+            ],
+            [
+              "GN0005",
+              "16.63"
+            ],
+            [
+              "GN0007",
+              "157.50"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "将久润食品供应商品的库存数量清零",
+      "analysis": "Number 在 Goods 中表示库存，GN0002 的库存改为 0，销售记录数量保持不变。",
+      "results": [
+        {
+          "sql": "UPDATE Goods AS g JOIN Supplier AS s\n  ON s.SupplierNO=g.SupplierNO\nSET g.Number=0 WHERE s.SupplierName='久润食品';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsNO,Number FROM Goods WHERE GoodsNO='GN0002';",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tNumber\nGN0002\t0\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "Number"
+          ],
+          "rows": [
+            [
+              "GN0002",
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "删除购买优乐美奶茶且数量低于三的销售记录",
+      "analysis": "删除 S02、S03 各购买 1 件的记录，S01 购买 3 件的记录保留。",
+      "results": [
+        {
+          "sql": "DELETE b FROM SaleBill AS b JOIN Goods AS g\n  ON g.GoodsNO=b.GoodsNO\nWHERE g.GoodsName='优乐美奶茶' AND b.Number<3;\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n2\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "2"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,Number FROM SaleBill WHERE GoodsNO='GN0001';",
+          "exit_code": 0,
+          "stdout": "SNO\tNumber\nS01\t3\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "Number"
+          ],
+          "rows": [
+            [
+              "S01",
+              "3"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "删除 2018 年以前生产的商品并处理外键引用",
+      "analysis": "GN0002 尚有两条销售记录，直接删除返回 ERROR 1451。正确处理是先删除对应销售记录，再删除商品；两个动作放在同一事务中，商品与销售记录一起提交。",
+      "results": [
+        {
+          "sql": "DELETE FROM Goods WHERE ProductTime<'2018-01-01';",
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "ERROR 1451 (23000) at line 1: Cannot delete or update a parent row: a foreign key constraint fails (`supermarket_exp_2`.`salebill`, CONSTRAINT `fk_salebill_goods` FOREIGN KEY (`GoodsNO`) REFERENCES `goods` (`GoodsNO`))\n",
+          "columns": [],
+          "rows": [],
+          "expected_error": 1451,
+          "verified": true
+        },
+        {
+          "sql": "START TRANSACTION;\nDELETE b FROM SaleBill AS b JOIN Goods AS g ON g.GoodsNO=b.GoodsNO\nWHERE g.ProductTime<'2018-01-01';\nDELETE FROM Goods WHERE ProductTime<'2018-01-01';\nCOMMIT;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT GoodsNO FROM Goods ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\nGN0001\nGN0005\nGN0007\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO"
+          ],
+          "rows": [
+            [
+              "GN0001"
+            ],
+            [
+              "GN0005"
+            ],
+            [
+              "GN0007"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "删除卡夫食品供应商品的销售记录",
+      "analysis": "前题操作后，卡夫食品对应剩余 GN0001/S01 一条销售记录，删除成功。",
+      "results": [
+        {
+          "sql": "DELETE b FROM SaleBill AS b\nJOIN Goods AS g ON g.GoodsNO=b.GoodsNO\nJOIN Supplier AS s ON s.SupplierNO=g.SupplierNO\nWHERE s.SupplierName='卡夫食品';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "删除 ACC 学院学生的销售记录",
+      "analysis": "删除张小红购买 GN0005 的剩余记录，影响 1 行；不删除学生本身。",
+      "results": [
+        {
+          "sql": "DELETE b FROM SaleBill AS b JOIN Student AS s\nON s.SNO=b.SNO WHERE s.College='ACC';\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "按引用顺序删除所有销售记录和商品",
+      "analysis": "先删除 SaleBill，再删除 Goods。此时销售表已空，商品表剩余 3 行，事务提交后两表均空。",
+      "results": [
+        {
+          "sql": "START TRANSACTION;\nDELETE FROM SaleBill;\nDELETE FROM Goods;\nCOMMIT;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT (SELECT COUNT(*) FROM SaleBill) AS sales,\n       (SELECT COUNT(*) FROM Goods) AS goods;",
+          "exit_code": 0,
+          "stdout": "sales\tgoods\n0\t0\n",
+          "stderr": "",
+          "columns": [
+            "sales",
+            "goods"
+          ],
+          "rows": [
+            [
+              "0",
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "删除 1997 年以前出生的学生",
+      "analysis": "1996 年出生的伍民被删除，剩余 4 名学生。此时销售表已空，不会发生外键冲突。",
+      "results": [
+        {
+          "sql": "DELETE FROM Student WHERE BirthYear<1997;\nSELECT ROW_COUNT() AS affected_rows;",
+          "exit_code": 0,
+          "stdout": "affected_rows\n1\n",
+          "stderr": "",
+          "columns": [
+            "affected_rows"
+          ],
+          "rows": [
+            [
+              "1"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT SNO,SName,BirthYear FROM Student ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tBirthYear\nS01\t李明\t1999\nS02\t徐好\t1998\nS04\t闵红\t1997\nS05\t张小红\t1997\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "BirthYear"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "1999"
+            ],
+            [
+              "S02",
+              "徐好",
+              "1998"
+            ],
+            [
+              "S04",
+              "闵红",
+              "1997"
+            ],
+            [
+              "S05",
+              "张小红",
+              "1997"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "category-key-migration",
+      "sql": "START TRANSACTION;\nINSERT INTO Category SELECT 'CN004',CategoryName,Descriptions\nFROM Category WHERE CategoryNO='CN005';\nUPDATE Goods SET CategoryNO='CN004' WHERE CategoryNO='CN005';\nDELETE FROM Category WHERE CategoryNO='CN005';\nSELECT GoodsNO,CategoryNO FROM Goods WHERE GoodsNO='GN0007';\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "GoodsNO\tCategoryNO\nGN0007\tCN004\n",
+      "stderr": "",
+      "columns": [
+        "GoodsNO",
+        "CategoryNO"
+      ],
+      "rows": [
+        [
+          "GN0007",
+          "CN004"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "category-migration-rolled-back",
+      "sql": "SELECT CategoryNO FROM Goods WHERE GoodsNO='GN0007';",
+      "exit_code": 0,
+      "stdout": "CategoryNO\nCN005\n",
+      "stderr": "",
+      "columns": [
+        "CategoryNO"
+      ],
+      "rows": [
+        [
+          "CN005"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "old-product-child-rows-removed",
+      "sql": "SELECT COUNT(*) FROM SaleBill WHERE GoodsNO='GN0002';",
+      "exit_code": 0,
+      "stdout": "COUNT(*)\n0\n",
+      "stderr": "",
+      "columns": [
+        "COUNT(*)"
+      ],
+      "rows": [
+        [
+          "0"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    }
+  ],
+  "final_counts": [
+    [
+      "Category",
+      "3"
+    ],
+    [
+      "Supplier",
+      "5"
+    ],
+    [
+      "Student",
+      "4"
+    ],
+    [
+      "Goods",
+      "0"
+    ],
+    [
+      "SaleBill",
+      "0"
+    ]
+  ]
+}

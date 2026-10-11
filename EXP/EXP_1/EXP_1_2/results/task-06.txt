@@ -1,0 +1,19 @@
+SQL:
+UPDATE Goods AS g JOIN Supplier AS s
+  ON s.SupplierNO=g.SupplierNO
+SET g.Number=0 WHERE s.SupplierName='久润食品';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT GoodsNO,Number FROM Goods WHERE GoodsNO='GN0002';
+EXIT: 0
+STDOUT:
+GoodsNO	Number
+GN0002	0
+STDERR:

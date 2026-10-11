@@ -1,0 +1,15 @@
+SQL:
+UPDATE Category SET CategoryNO='CN004' WHERE CategoryNO='CN005';
+EXIT: 1
+STDOUT:
+STDERR:
+ERROR 1451 (23000) at line 1: Cannot delete or update a parent row: a foreign key constraint fails (`supermarket_exp_2`.`goods`, CONSTRAINT `fk_goods_category` FOREIGN KEY (`CategoryNO`) REFERENCES `category` (`CategoryNO`))
+
+
+SQL:
+SELECT CategoryNO FROM Category WHERE CategoryNO IN ('CN004','CN005');
+EXIT: 0
+STDOUT:
+CategoryNO
+CN005
+STDERR:

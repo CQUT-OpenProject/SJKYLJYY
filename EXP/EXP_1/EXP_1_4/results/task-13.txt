@@ -1,0 +1,17 @@
+SQL:
+UPDATE V_MIS SET SName='李欢欢' WHERE SNO='s01';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+0
+STDERR:
+
+
+SQL:
+SELECT SNO,SName,Major FROM Student WHERE SNO='s01';
+EXIT: 0
+STDOUT:
+SNO	SName	Major
+S01	李明	IT
+STDERR:

@@ -1,0 +1,22 @@
+SQL:
+SELECT g.GoodsNO,g.GoodsName,c.CategoryName,g.SalePrice,g.Number
+FROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO
+LEFT JOIN SaleBill AS b ON b.GoodsNO=g.GoodsNO
+WHERE b.GoodsNO IS NULL ORDER BY g.GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	CategoryName	SalePrice	Number
+GN0007	小绵羊被套	床上用品	150.00	28
+STDERR:
+
+
+SQL:
+SELECT g.GoodsNO,g.GoodsName,c.CategoryName,g.SalePrice,g.Number
+FROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO
+WHERE NOT EXISTS (SELECT 1 FROM SaleBill AS b
+                  WHERE b.GoodsNO=g.GoodsNO) ORDER BY g.GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	CategoryName	SalePrice	Number
+GN0007	小绵羊被套	床上用品	150.00	28
+STDERR:

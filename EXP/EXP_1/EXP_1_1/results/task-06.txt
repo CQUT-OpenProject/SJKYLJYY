@@ -1,0 +1,71 @@
+USE SuperMarket;
+CREATE TABLE Supplier (
+  SupplierNO VARCHAR(8) NOT NULL,
+  SupplierName VARCHAR(60) NOT NULL,
+  Address VARCHAR(100) NOT NULL,
+  Number VARCHAR(20) NOT NULL,
+  CONSTRAINT pk_supplier PRIMARY KEY (SupplierNO)
+) ENGINE=InnoDB;
+-- Supplier.Number 是电话，必须用字符串保存。
+ALTER TABLE Goods
+  ADD CONSTRAINT fk_goods_supplier FOREIGN KEY (SupplierNO)
+    REFERENCES Supplier (SupplierNO),
+  ADD CONSTRAINT fk_goods_category FOREIGN KEY (CategoryNO)
+    REFERENCES Category (CategoryNO);
+SELECT TABLE_NAME, CONSTRAINT_NAME, COLUMN_NAME,
+       REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+FROM information_schema.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = 'SuperMarket'
+  AND REFERENCED_TABLE_NAME IS NOT NULL
+ORDER BY TABLE_NAME, CONSTRAINT_NAME;
+
+
+--------------
+CREATE TABLE Supplier (
+  SupplierNO VARCHAR(8) NOT NULL,
+  SupplierName VARCHAR(60) NOT NULL,
+  Address VARCHAR(100) NOT NULL,
+  Number VARCHAR(20) NOT NULL,
+  CONSTRAINT pk_supplier PRIMARY KEY (SupplierNO)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+-- Supplier.Number 是电话，必须用字符串保存。
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+ALTER TABLE Goods
+  ADD CONSTRAINT fk_goods_supplier FOREIGN KEY (SupplierNO)
+    REFERENCES Supplier (SupplierNO),
+  ADD CONSTRAINT fk_goods_category FOREIGN KEY (CategoryNO)
+    REFERENCES Category (CategoryNO)
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SELECT TABLE_NAME, CONSTRAINT_NAME, COLUMN_NAME,
+       REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+FROM information_schema.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = 'SuperMarket'
+  AND REFERENCED_TABLE_NAME IS NOT NULL
+ORDER BY TABLE_NAME, CONSTRAINT_NAME
+--------------
+
++------------+---------------------+-------------+-----------------------+------------------------+
+| TABLE_NAME | CONSTRAINT_NAME     | COLUMN_NAME | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
++------------+---------------------+-------------+-----------------------+------------------------+
+| Goods      | fk_goods_category   | CategoryNO  | Category              | CategoryNO             |
+| Goods      | fk_goods_supplier   | SupplierNO  | Supplier              | SupplierNO             |
+| SaleBill   | fk_salebill_goods   | GoodsNO     | Goods                 | GoodsNO                |
+| SaleBill   | fk_salebill_student | SNO         | Student               | SNO                    |
++------------+---------------------+-------------+-----------------------+------------------------+
+4 rows in set
+
+Bye

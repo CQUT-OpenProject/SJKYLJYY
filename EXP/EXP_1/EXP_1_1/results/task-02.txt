@@ -1,0 +1,57 @@
+USE SuperMarket;
+CREATE TABLE Goods (
+  GoodsNO VARCHAR(8) NOT NULL,
+  SupplierNO VARCHAR(8) NOT NULL,
+  CategoryNO VARCHAR(8) NOT NULL,
+  GoodsName VARCHAR(60) NOT NULL,
+  InPrice FLOAT NOT NULL,
+  SalePrice DECIMAL(10,2) NOT NULL,
+  Number INT NOT NULL,
+  ProductTime DATE NOT NULL,
+  CONSTRAINT pk_goods PRIMARY KEY (GoodsNO)
+) ENGINE=InnoDB;
+-- 两个被引用表按原题在第 5、6 项创建，之后补充外键。
+SHOW COLUMNS FROM Goods;
+
+
+--------------
+CREATE TABLE Goods (
+  GoodsNO VARCHAR(8) NOT NULL,
+  SupplierNO VARCHAR(8) NOT NULL,
+  CategoryNO VARCHAR(8) NOT NULL,
+  GoodsName VARCHAR(60) NOT NULL,
+  InPrice FLOAT NOT NULL,
+  SalePrice DECIMAL(10,2) NOT NULL,
+  Number INT NOT NULL,
+  ProductTime DATE NOT NULL,
+  CONSTRAINT pk_goods PRIMARY KEY (GoodsNO)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+-- 两个被引用表按原题在第 5、6 项创建，之后补充外键。
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SHOW COLUMNS FROM Goods
+--------------
+
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| GoodsNO     | varchar(8)    | NO   | PRI | NULL    |       |
+| SupplierNO  | varchar(8)    | NO   |     | NULL    |       |
+| CategoryNO  | varchar(8)    | NO   |     | NULL    |       |
+| GoodsName   | varchar(60)   | NO   |     | NULL    |       |
+| InPrice     | float         | NO   |     | NULL    |       |
+| SalePrice   | decimal(10,2) | NO   |     | NULL    |       |
+| Number      | int           | NO   |     | NULL    |       |
+| ProductTime | date          | NO   |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+8 rows in set
+
+Bye

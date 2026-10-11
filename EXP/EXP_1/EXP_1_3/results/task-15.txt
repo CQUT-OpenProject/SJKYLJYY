@@ -1,0 +1,10 @@
+SQL:
+SELECT College,COUNT(*) AS StudentCount FROM Student
+WHERE YEAR(CURRENT_DATE())-BirthYear>20
+GROUP BY College ORDER BY College;
+EXIT: 0
+STDOUT:
+College	StudentCount
+ACC	2
+CS	3
+STDERR:

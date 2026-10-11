@@ -1,0 +1,10 @@
+SQL:
+SELECT GoodsNO,GoodsName,Number FROM Goods
+WHERE CategoryNO='cn001' AND Number=(
+  SELECT MAX(Number) FROM Goods WHERE CategoryNO='cn001')
+ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	Number
+GN0001	优乐美奶茶	100
+STDERR:

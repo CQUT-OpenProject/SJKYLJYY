@@ -1,0 +1,11 @@
+SQL:
+SELECT s.SNO,s.SName,s.College FROM Student AS s
+JOIN SaleBill AS b ON b.SNO=s.SNO
+WHERE b.GoodsNO IN ('GN0001','GN0002')
+GROUP BY s.SNO,s.SName,s.College
+HAVING COUNT(DISTINCT b.GoodsNO)=2 ORDER BY s.SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S02	徐好	CS
+STDERR:

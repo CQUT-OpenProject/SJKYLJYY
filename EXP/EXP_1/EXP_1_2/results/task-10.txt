@@ -1,0 +1,9 @@
+SQL:
+DELETE b FROM SaleBill AS b JOIN Student AS s
+ON s.SNO=b.SNO WHERE s.College='ACC';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:

@@ -1,0 +1,20 @@
+SQL:
+DELETE FROM Student WHERE BirthYear<1997;
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT SNO,SName,BirthYear FROM Student ORDER BY SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	BirthYear
+S01	李明	1999
+S02	徐好	1998
+S04	闵红	1997
+S05	张小红	1997
+STDERR:

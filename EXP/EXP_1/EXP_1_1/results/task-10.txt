@@ -1,0 +1,24 @@
+USE SuperMarket;
+ALTER TABLE Student DROP INDEX uq_student_weixin;
+SHOW INDEX FROM Student;
+
+
+--------------
+ALTER TABLE Student DROP INDEX uq_student_weixin
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW INDEX FROM Student
+--------------
+
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Student |          0 | PRIMARY  |            1 | SNO         | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+1 row in set
+
+Bye

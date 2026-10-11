@@ -1,0 +1,6 @@
+SQL:
+UPDATE V_COM SET StudentCount=10 WHERE College='CS';
+EXIT: 1
+STDOUT:
+STDERR:
+ERROR 1288 (HY000) at line 1: The target table V_COM of the UPDATE is not updatable

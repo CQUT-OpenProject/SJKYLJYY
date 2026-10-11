@@ -1,0 +1,24 @@
+USE SuperMarket;
+ALTER TABLE Goods ADD COLUMN QGperiod INT;
+SHOW COLUMNS FROM Goods LIKE 'QGperiod';
+
+
+--------------
+ALTER TABLE Goods ADD COLUMN QGperiod INT
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW COLUMNS FROM Goods LIKE 'QGperiod'
+--------------
+
++----------+------+------+-----+---------+-------+
+| Field    | Type | Null | Key | Default | Extra |
++----------+------+------+-----+---------+-------+
+| QGperiod | int  | YES  |     | NULL    |       |
++----------+------+------+-----+---------+-------+
+1 row in set
+
+Bye

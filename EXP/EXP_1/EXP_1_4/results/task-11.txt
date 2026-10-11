@@ -1,0 +1,18 @@
+SQL:
+INSERT INTO V_MIS (SNO,SName,BirthYear,College,Major,WeiXin)
+VALUES ('s09','宋江',2000,'CS','MIS','wx009');
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT SNO,SName,Major FROM V_MIS WHERE SNO='s09';
+EXIT: 0
+STDOUT:
+SNO	SName	Major
+s09	宋江	MIS
+STDERR:

@@ -1,0 +1,30 @@
+USE SuperMarket;
+ALTER TABLE SaleBill
+  ADD CONSTRAINT chk_salebill_positive CHECK (Number > 0);
+SELECT CONSTRAINT_NAME, CHECK_CLAUSE
+FROM information_schema.CHECK_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA = 'SuperMarket';
+
+
+--------------
+ALTER TABLE SaleBill
+  ADD CONSTRAINT chk_salebill_positive CHECK (Number > 0)
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SELECT CONSTRAINT_NAME, CHECK_CLAUSE
+FROM information_schema.CHECK_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA = 'SuperMarket'
+--------------
+
++-----------------------+----------------+
+| CONSTRAINT_NAME       | CHECK_CLAUSE   |
++-----------------------+----------------+
+| chk_salebill_positive | (`Number` > 0) |
++-----------------------+----------------+
+1 row in set
+
+Bye

@@ -1,0 +1,13 @@
+SQL:
+START TRANSACTION;
+INSERT INTO Category SELECT 'CN004',CategoryName,Descriptions
+FROM Category WHERE CategoryNO='CN005';
+UPDATE Goods SET CategoryNO='CN004' WHERE CategoryNO='CN005';
+DELETE FROM Category WHERE CategoryNO='CN005';
+SELECT GoodsNO,CategoryNO FROM Goods WHERE GoodsNO='GN0007';
+ROLLBACK;
+EXIT: 0
+STDOUT:
+GoodsNO	CategoryNO
+GN0007	CN004
+STDERR:

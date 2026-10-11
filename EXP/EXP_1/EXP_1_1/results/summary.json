@@ -1,0 +1,169 @@
+{
+  "tasks": [
+    {
+      "number": 1,
+      "exit_code": 0
+    },
+    {
+      "number": 2,
+      "exit_code": 0
+    },
+    {
+      "number": 3,
+      "exit_code": 0
+    },
+    {
+      "number": 4,
+      "exit_code": 0
+    },
+    {
+      "number": 5,
+      "exit_code": 0
+    },
+    {
+      "number": 6,
+      "exit_code": 0
+    },
+    {
+      "number": 7,
+      "exit_code": 0
+    },
+    {
+      "number": 8,
+      "exit_code": 0
+    },
+    {
+      "number": 9,
+      "exit_code": 0
+    },
+    {
+      "number": 10,
+      "exit_code": 0
+    },
+    {
+      "number": 11,
+      "exit_code": 0
+    },
+    {
+      "number": 12,
+      "exit_code": 0
+    },
+    {
+      "number": 13,
+      "exit_code": 0
+    },
+    {
+      "number": 14,
+      "exit_code": 0
+    },
+    {
+      "number": 15,
+      "exit_code": 0
+    }
+  ],
+  "checks": [
+    {
+      "name": "unique-weixin-before-drop",
+      "expected_error": 1062,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "positive-check-zero-rejected",
+      "expected_error": 3819,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "weixin-duplicate-after-drop",
+      "expected_error": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "range-boundary--1",
+      "expected_error": 3819,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "range-boundary-0",
+      "expected_error": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "range-boundary-100",
+      "expected_error": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "range-boundary-101",
+      "expected_error": 3819,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "sample-data-counts",
+      "expected_error": 0,
+      "exit_code": 0,
+      "passed": true
+    },
+    {
+      "name": "primary-key-duplicate",
+      "expected_error": 1062,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "salebill-composite-key-duplicate",
+      "expected_error": 1062,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "goods-supplier-foreign-key",
+      "expected_error": 1452,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "goods-category-foreign-key",
+      "expected_error": 1452,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "salebill-goods-foreign-key",
+      "expected_error": 1452,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "salebill-student-foreign-key",
+      "expected_error": 1452,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "referenced-parent-delete-rejected",
+      "expected_error": 1451,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "salebill-null-number-rejected",
+      "expected_error": 1048,
+      "exit_code": 1,
+      "passed": true
+    },
+    {
+      "name": "decimal-rounding",
+      "expected_error": 0,
+      "exit_code": 0,
+      "passed": true
+    }
+  ],
+  "fixture_rows_remaining": 0
+}

@@ -1,0 +1,14 @@
+SQL:
+START TRANSACTION;
+INSERT INTO Goods VALUES
+('GNTEST1','sup001','CN001','库存测试一',1,2,3,'2026-10-11'),
+('GNTEST2','sup001','CN001','库存测试二',1,2,9,'2026-10-11');
+SELECT GoodsNO,GoodsName,CategoryNO,Number FROM Goods
+WHERE Number<=10 ORDER BY CategoryNO ASC,Number DESC,GoodsNO;
+ROLLBACK;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	CategoryNO	Number
+GNTEST2	库存测试二	CN001	9
+GNTEST1	库存测试一	CN001	3
+STDERR:

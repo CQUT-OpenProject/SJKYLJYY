@@ -1,0 +1,8 @@
+SQL:
+SELECT College,COUNT(*) AS StudentCount FROM Student
+GROUP BY College HAVING COUNT(*)>=3 ORDER BY College;
+EXIT: 0
+STDOUT:
+College	StudentCount
+CS	3
+STDERR:

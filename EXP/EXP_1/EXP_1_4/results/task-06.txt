@@ -1,0 +1,21 @@
+SQL:
+CREATE VIEW V_GOODS AS
+SELECT c.CategoryNO,c.CategoryName,COUNT(g.GoodsNO) AS GoodsCount,
+CAST(AVG(g.SalePrice) AS DECIMAL(10,2)) AS AvgPrice,
+MIN(g.Number) AS MinStock
+FROM Category AS c LEFT JOIN Goods AS g ON g.CategoryNO=c.CategoryNO
+GROUP BY c.CategoryNO,c.CategoryName;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT * FROM V_GOODS ORDER BY CategoryNO;
+EXIT: 0
+STDOUT:
+CategoryNO	CategoryName	GoodsCount	AvgPrice	MinStock
+CN001	咖啡	2	4.65	50
+CN002	洗发水	1	19.80	65
+CN005	床上用品	1	150.00	28
+STDERR:

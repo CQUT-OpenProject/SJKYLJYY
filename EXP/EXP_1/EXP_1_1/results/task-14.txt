@@ -1,0 +1,41 @@
+USE SuperMarket;
+-- Category 没有商品名 GoodsName，依素材按商品种类名 CategoryName 降序。
+CREATE UNIQUE INDEX uq_category_no_name
+  ON Category (CategoryNO ASC, CategoryName DESC);
+SELECT INDEX_NAME, NON_UNIQUE, SEQ_IN_INDEX, COLUMN_NAME, COLLATION
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = 'SuperMarket' AND TABLE_NAME = 'Category'
+ORDER BY INDEX_NAME, SEQ_IN_INDEX;
+
+
+--------------
+-- Category 没有商品名 GoodsName，依素材按商品种类名 CategoryName 降序。
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+CREATE UNIQUE INDEX uq_category_no_name
+  ON Category (CategoryNO ASC, CategoryName DESC)
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SELECT INDEX_NAME, NON_UNIQUE, SEQ_IN_INDEX, COLUMN_NAME, COLLATION
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA = 'SuperMarket' AND TABLE_NAME = 'Category'
+ORDER BY INDEX_NAME, SEQ_IN_INDEX
+--------------
+
++---------------------+------------+--------------+--------------+-----------+
+| INDEX_NAME          | NON_UNIQUE | SEQ_IN_INDEX | COLUMN_NAME  | COLLATION |
++---------------------+------------+--------------+--------------+-----------+
+| PRIMARY             |          0 |            1 | CategoryNO   | A         |
+| uq_category_no_name |          0 |            1 | CategoryNO   | A         |
+| uq_category_no_name |          0 |            2 | CategoryName | D         |
++---------------------+------------+--------------+--------------+-----------+
+3 rows in set
+
+Bye

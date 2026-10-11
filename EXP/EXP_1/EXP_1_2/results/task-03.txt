@@ -1,0 +1,20 @@
+SQL:
+UPDATE Goods SET SalePrice=ROUND(SalePrice*1.05,2);
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+4
+STDERR:
+
+
+SQL:
+SELECT GoodsNO,SalePrice FROM Goods ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	SalePrice
+GN0001	3.68
+GN0002	6.09
+GN0005	20.79
+GN0007	157.50
+STDERR:

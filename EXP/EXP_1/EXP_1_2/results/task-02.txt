@@ -1,0 +1,17 @@
+SQL:
+UPDATE Goods SET GoodsName='雀巢咖啡条装' WHERE GoodsName='雀巢咖啡';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT GoodsNO,GoodsName FROM Goods WHERE GoodsNO='GN0002';
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName
+GN0002	雀巢咖啡条装
+STDERR:

@@ -1,0 +1,12 @@
+SQL:
+SELECT s.SNO,s.SName,s.College FROM Student AS s
+WHERE EXISTS (SELECT 1 FROM SaleBill AS b WHERE b.SNO=s.SNO)
+ORDER BY s.SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S01	李明	CS
+S02	徐好	CS
+S03	伍民	CS
+S05	张小红	ACC
+STDERR:

@@ -1,0 +1,15 @@
+SQL:
+START TRANSACTION;
+INSERT INTO Goods VALUES
+('GNTEST','sup001','CN001','并列测试',1,2,100,'2026-10-11');
+SELECT GoodsNO,GoodsName,Number FROM Goods
+WHERE CategoryNO='cn001' AND Number=(
+  SELECT MAX(Number) FROM Goods WHERE CategoryNO='cn001')
+ORDER BY GoodsNO;
+ROLLBACK;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	Number
+GN0001	优乐美奶茶	100
+GNTEST	并列测试	100
+STDERR:

@@ -1,0 +1,29 @@
+USE SuperMarket;
+ALTER TABLE Student DROP COLUMN BirthYear;
+SHOW COLUMNS FROM Student;
+
+
+--------------
+ALTER TABLE Student DROP COLUMN BirthYear
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW COLUMNS FROM Student
+--------------
+
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| SNO     | varchar(8)  | NO   | PRI | NULL    |       |
+| SName   | varchar(30) | NO   |     | NULL    |       |
+| Gender  | varchar(2)  | NO   |     | NULL    |       |
+| College | varchar(10) | NO   |     | NULL    |       |
+| Major   | varchar(10) | NO   |     | NULL    |       |
+| WeiXin  | varchar(40) | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set
+
+Bye

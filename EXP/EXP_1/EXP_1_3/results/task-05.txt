@@ -1,0 +1,6 @@
+SQL:
+SELECT GoodsNO,SupplierNO,GoodsName,Number
+FROM Goods WHERE Number<10 ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+STDERR:

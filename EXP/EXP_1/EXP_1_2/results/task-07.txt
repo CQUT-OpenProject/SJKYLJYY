@@ -1,0 +1,19 @@
+SQL:
+DELETE b FROM SaleBill AS b JOIN Goods AS g
+  ON g.GoodsNO=b.GoodsNO
+WHERE g.GoodsName='优乐美奶茶' AND b.Number<3;
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+2
+STDERR:
+
+
+SQL:
+SELECT SNO,Number FROM SaleBill WHERE GoodsNO='GN0001';
+EXIT: 0
+STDOUT:
+SNO	Number
+S01	3
+STDERR:

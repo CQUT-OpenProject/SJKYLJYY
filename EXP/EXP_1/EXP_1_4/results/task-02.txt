@@ -1,0 +1,22 @@
+SQL:
+CREATE VIEW V_SSG AS
+SELECT s.SNO,s.SName,g.GoodsName,g.SalePrice,b.Number
+FROM Student AS s JOIN SaleBill AS b ON b.SNO=s.SNO
+JOIN Goods AS g ON g.GoodsNO=b.GoodsNO;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT * FROM V_SSG ORDER BY SNO,GoodsName;
+EXIT: 0
+STDOUT:
+SNO	SName	GoodsName	SalePrice	Number
+S01	李明	优乐美奶茶	3.50	3
+S02	徐好	优乐美奶茶	3.50	1
+S02	徐好	雀巢咖啡	5.80	2
+S03	伍民	优乐美奶茶	3.50	1
+S05	张小红	雀巢咖啡	5.80	2
+S05	张小红	飘柔洗发水	19.80	1
+STDERR:

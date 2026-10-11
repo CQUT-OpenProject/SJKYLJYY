@@ -1,0 +1,18 @@
+SQL:
+START TRANSACTION;
+DELETE FROM SaleBill;
+DELETE FROM Goods;
+COMMIT;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT (SELECT COUNT(*) FROM SaleBill) AS sales,
+       (SELECT COUNT(*) FROM Goods) AS goods;
+EXIT: 0
+STDOUT:
+sales	goods
+0	0
+STDERR:

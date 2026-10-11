@@ -1,0 +1,14 @@
+SQL:
+START TRANSACTION;
+INSERT INTO SaleBill VALUES ('GN0007','S04','2019-01-02',6);
+SELECT s.SName,s.College,SUM(b.Number) AS BuyTotal
+FROM Student AS s JOIN SaleBill AS b ON b.SNO=s.SNO
+WHERE b.HappenTime>='2019-01-01' AND b.HappenTime<'2020-01-01'
+GROUP BY s.SNO,s.SName,s.College HAVING SUM(b.Number)>5
+ORDER BY s.SNO;
+ROLLBACK;
+EXIT: 0
+STDOUT:
+SName	College	BuyTotal
+闵红	ACC	6
+STDERR:

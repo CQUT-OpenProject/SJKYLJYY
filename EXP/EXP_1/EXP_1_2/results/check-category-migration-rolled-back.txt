@@ -1,0 +1,7 @@
+SQL:
+SELECT CategoryNO FROM Goods WHERE GoodsNO='GN0007';
+EXIT: 0
+STDOUT:
+CategoryNO
+CN005
+STDERR:

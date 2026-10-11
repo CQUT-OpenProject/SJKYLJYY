@@ -1,0 +1,12 @@
+SQL:
+SELECT g.GoodsNO,g.GoodsName,COALESCE(SUM(b.Number),0) AS SaleTotal
+FROM Goods AS g LEFT JOIN SaleBill AS b ON b.GoodsNO=g.GoodsNO
+GROUP BY g.GoodsNO,g.GoodsName ORDER BY g.GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	SaleTotal
+GN0001	优乐美奶茶	5
+GN0002	雀巢咖啡	4
+GN0005	飘柔洗发水	1
+GN0007	小绵羊被套	0
+STDERR:

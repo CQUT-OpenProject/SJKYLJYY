@@ -1,0 +1,44 @@
+USE SuperMarket;
+CREATE TABLE Student (
+  SNO VARCHAR(8) NOT NULL,
+  SName VARCHAR(30) NOT NULL,
+  BirthYear SMALLINT NOT NULL,
+  Gender VARCHAR(2) NOT NULL,
+  College VARCHAR(10) NOT NULL,
+  Major VARCHAR(10) NOT NULL,
+  WeiXin VARCHAR(40),
+  CONSTRAINT pk_student PRIMARY KEY (SNO),
+  CONSTRAINT uq_student_weixin UNIQUE (WeiXin)
+) ENGINE=InnoDB;
+SHOW INDEX FROM Student;
+
+
+--------------
+CREATE TABLE Student (
+  SNO VARCHAR(8) NOT NULL,
+  SName VARCHAR(30) NOT NULL,
+  BirthYear SMALLINT NOT NULL,
+  Gender VARCHAR(2) NOT NULL,
+  College VARCHAR(10) NOT NULL,
+  Major VARCHAR(10) NOT NULL,
+  WeiXin VARCHAR(40),
+  CONSTRAINT pk_student PRIMARY KEY (SNO),
+  CONSTRAINT uq_student_weixin UNIQUE (WeiXin)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SHOW INDEX FROM Student
+--------------
+
++---------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table   | Non_unique | Key_name          | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++---------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Student |          0 | PRIMARY           |            1 | SNO         | A         |           0 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| Student |          0 | uq_student_weixin |            1 | WeiXin      | A         |           0 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++---------+------------+-------------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set
+
+Bye

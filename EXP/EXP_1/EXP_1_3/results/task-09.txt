@@ -1,0 +1,8 @@
+SQL:
+SELECT SNO,SName,College FROM Student WHERE SName LIKE '张%'
+ORDER BY SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S05	张小红	ACC
+STDERR:

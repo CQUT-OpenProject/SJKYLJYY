@@ -1,0 +1,15 @@
+SQL:
+UPDATE V_SSG SET SalePrice=10 WHERE GoodsName='力神咖啡';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+0
+STDERR:
+
+
+SQL:
+SELECT GoodsName,SalePrice FROM V_SSG WHERE GoodsName='力神咖啡';
+EXIT: 0
+STDOUT:
+STDERR:

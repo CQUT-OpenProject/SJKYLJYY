@@ -1,0 +1,17 @@
+SQL:
+CREATE VIEW V_COM AS SELECT College,COUNT(*) AS StudentCount,
+CAST(AVG(YEAR(CURRENT_DATE())-BirthYear) AS DECIMAL(6,2)) AS AvgAge
+FROM Student GROUP BY College;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT * FROM V_COM ORDER BY College;
+EXIT: 0
+STDOUT:
+College	StudentCount	AvgAge
+ACC	2	29.00
+CS	3	28.33
+STDERR:

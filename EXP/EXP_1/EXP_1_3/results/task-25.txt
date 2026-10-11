@@ -1,0 +1,12 @@
+SQL:
+SELECT DISTINCT s.SNO,s.SName,s.College FROM Student AS s
+JOIN SaleBill AS b ON b.SNO=s.SNO
+WHERE b.GoodsNO IN ('GN0001','GN0002') ORDER BY s.SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S01	李明	CS
+S02	徐好	CS
+S03	伍民	CS
+S05	张小红	ACC
+STDERR:

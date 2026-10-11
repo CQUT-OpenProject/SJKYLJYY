@@ -1,0 +1,32 @@
+USE SuperMarket;
+ALTER TABLE SaleBill
+  DROP CHECK chk_salebill_positive,
+  ADD CONSTRAINT chk_salebill_range CHECK (Number BETWEEN 0 AND 100);
+SELECT CONSTRAINT_NAME, CHECK_CLAUSE
+FROM information_schema.CHECK_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA = 'SuperMarket';
+
+
+--------------
+ALTER TABLE SaleBill
+  DROP CHECK chk_salebill_positive,
+  ADD CONSTRAINT chk_salebill_range CHECK (Number BETWEEN 0 AND 100)
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SELECT CONSTRAINT_NAME, CHECK_CLAUSE
+FROM information_schema.CHECK_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA = 'SuperMarket'
+--------------
+
++--------------------+------------------------------+
+| CONSTRAINT_NAME    | CHECK_CLAUSE                 |
++--------------------+------------------------------+
+| chk_salebill_range | (`Number` between 0 and 100) |
++--------------------+------------------------------+
+1 row in set
+
+Bye

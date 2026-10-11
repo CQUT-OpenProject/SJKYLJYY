@@ -1,0 +1,28 @@
+SQL:
+DELETE FROM Goods WHERE ProductTime<'2018-01-01';
+EXIT: 1
+STDOUT:
+STDERR:
+ERROR 1451 (23000) at line 1: Cannot delete or update a parent row: a foreign key constraint fails (`supermarket_exp_2`.`salebill`, CONSTRAINT `fk_salebill_goods` FOREIGN KEY (`GoodsNO`) REFERENCES `goods` (`GoodsNO`))
+
+
+SQL:
+START TRANSACTION;
+DELETE b FROM SaleBill AS b JOIN Goods AS g ON g.GoodsNO=b.GoodsNO
+WHERE g.ProductTime<'2018-01-01';
+DELETE FROM Goods WHERE ProductTime<'2018-01-01';
+COMMIT;
+EXIT: 0
+STDOUT:
+STDERR:
+
+
+SQL:
+SELECT GoodsNO FROM Goods ORDER BY GoodsNO;
+EXIT: 0
+STDOUT:
+GoodsNO
+GN0001
+GN0005
+GN0007
+STDERR:

@@ -1,0 +1,7 @@
+SQL:
+SELECT COUNT(*) AS StudentCount FROM Student WHERE Major='MIS';
+EXIT: 0
+STDOUT:
+StudentCount
+2
+STDERR:

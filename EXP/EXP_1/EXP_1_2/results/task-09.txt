@@ -1,0 +1,11 @@
+SQL:
+DELETE b FROM SaleBill AS b
+JOIN Goods AS g ON g.GoodsNO=b.GoodsNO
+JOIN Supplier AS s ON s.SupplierNO=g.SupplierNO
+WHERE s.SupplierName='卡夫食品';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:

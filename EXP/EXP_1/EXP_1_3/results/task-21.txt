@@ -1,0 +1,15 @@
+SQL:
+SELECT g.GoodsNO,g.GoodsName,s.SName,b.HappenTime,b.Number
+FROM SaleBill AS b JOIN Goods AS g ON g.GoodsNO=b.GoodsNO
+JOIN Student AS s ON s.SNO=b.SNO
+ORDER BY b.HappenTime DESC,g.GoodsNO,s.SNO;
+EXIT: 0
+STDOUT:
+GoodsNO	GoodsName	SName	HappenTime	Number
+GN0001	优乐美奶茶	李明	2020-06-09	3
+GN0005	飘柔洗发水	张小红	2020-06-01	1
+GN0001	优乐美奶茶	徐好	2020-05-03	1
+GN0001	优乐美奶茶	伍民	2020-04-07	1
+GN0002	雀巢咖啡	张小红	2019-06-26	2
+GN0002	雀巢咖啡	徐好	2018-05-08	2
+STDERR:

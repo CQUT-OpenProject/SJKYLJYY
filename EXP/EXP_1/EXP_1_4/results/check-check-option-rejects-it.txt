@@ -1,0 +1,6 @@
+SQL:
+INSERT INTO V_MIS_CHECK (SNO,SName,BirthYear,College,Major,WeiXin) VALUES ('s11','检查测试',2000,'CS','IT','wx011');
+EXIT: 1
+STDOUT:
+STDERR:
+ERROR 1369 (HY000) at line 1: CHECK OPTION failed 'supermarket_exp_4.v_mis_check'

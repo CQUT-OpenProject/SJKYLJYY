@@ -1,0 +1,17 @@
+SQL:
+UPDATE V_MIS SET SName='徐慧慧' WHERE SNO='s02';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT SNO,SName FROM V_MIS WHERE SNO='s02';
+EXIT: 0
+STDOUT:
+SNO	SName
+S02	徐慧慧
+STDERR:

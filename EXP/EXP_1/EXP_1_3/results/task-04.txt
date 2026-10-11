@@ -1,0 +1,7 @@
+SQL:
+SELECT * FROM Goods WHERE CategoryNO='cn005' AND InPrice>20;
+EXIT: 0
+STDOUT:
+GoodsNO	SupplierNO	CategoryNO	GoodsName	InPrice	SalePrice	Number	ProductTime
+GN0007	sup005	CN005	小绵羊被套	120.0	150.00	28	2019-11-22
+STDERR:

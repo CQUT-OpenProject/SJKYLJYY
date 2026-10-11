@@ -1,0 +1,8 @@
+SQL:
+SELECT VERSION() AS version,CURRENT_DATE() AS execution_date,
+YEAR(CURRENT_DATE()) AS age_reference_year,@@sql_mode AS sql_mode;
+EXIT: 0
+STDOUT:
+version	execution_date	age_reference_year	sql_mode
+8.4.11	2026-10-11	2026	ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+STDERR:

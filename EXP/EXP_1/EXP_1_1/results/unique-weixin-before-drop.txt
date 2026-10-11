@@ -1,0 +1,25 @@
+START TRANSACTION;
+
+INSERT INTO Student VALUES ('T01','测试一',2000,'男','CS','IT','same');
+INSERT INTO Student VALUES ('T02','测试二',2000,'女','CS','IT','same');
+ROLLBACK;
+
+
+--------------
+START TRANSACTION
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+INSERT INTO Student VALUES ('T01','测试一',2000,'男','CS','IT','same')
+--------------
+
+Query OK, 1 row affected
+
+--------------
+INSERT INTO Student VALUES ('T02','测试二',2000,'女','CS','IT','same')
+--------------
+
+Bye
+ERROR 1062 (23000) at line 4: Duplicate entry 'same' for key 'student.uq_student_weixin'

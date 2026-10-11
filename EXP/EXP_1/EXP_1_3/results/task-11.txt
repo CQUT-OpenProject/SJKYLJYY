@@ -1,0 +1,6 @@
+SQL:
+SELECT GoodsNO,GoodsName,CategoryNO,Number FROM Goods
+WHERE Number<=10 ORDER BY CategoryNO ASC,Number DESC,GoodsNO;
+EXIT: 0
+STDOUT:
+STDERR:

@@ -1,0 +1,9 @@
+SQL:
+SELECT SNO,SName,College FROM Student WHERE College IN
+(SELECT College FROM Student WHERE SName='张小红') ORDER BY SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S04	闵红	ACC
+S05	张小红	ACC
+STDERR:

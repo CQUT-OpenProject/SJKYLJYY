@@ -1,0 +1,15 @@
+SQL:
+DELETE FROM V_MIS WHERE SNO='s09';
+SELECT ROW_COUNT() AS affected_rows;
+EXIT: 0
+STDOUT:
+affected_rows
+1
+STDERR:
+
+
+SQL:
+SELECT SNO FROM Student WHERE SNO='s09';
+EXIT: 0
+STDOUT:
+STDERR:

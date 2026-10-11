@@ -1,0 +1,24 @@
+USE SuperMarket;
+ALTER TABLE Goods MODIFY COLUMN InPrice DECIMAL(10,1) NOT NULL;
+SHOW COLUMNS FROM Goods LIKE 'InPrice';
+
+
+--------------
+ALTER TABLE Goods MODIFY COLUMN InPrice DECIMAL(10,1) NOT NULL
+--------------
+
+Query OK, 0 rows affected
+Records: 0  Duplicates: 0  Warnings: 0
+
+--------------
+SHOW COLUMNS FROM Goods LIKE 'InPrice'
+--------------
+
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| InPrice | decimal(10,1) | NO   |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+1 row in set
+
+Bye

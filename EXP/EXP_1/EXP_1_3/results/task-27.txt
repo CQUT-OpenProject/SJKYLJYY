@@ -1,0 +1,25 @@
+SQL:
+SELECT s.SNO,s.SName,s.College FROM Student AS s
+WHERE s.BirthYear=(SELECT MIN(t.BirthYear) FROM Student AS t
+                   WHERE t.College=s.College) ORDER BY s.SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S03	伍民	CS
+S04	闵红	ACC
+S05	张小红	ACC
+STDERR:
+
+
+SQL:
+SELECT s.SNO,s.SName,s.College FROM Student AS s
+JOIN (SELECT College,MIN(BirthYear) AS MinYear FROM Student
+      GROUP BY College) AS t
+ON t.College=s.College AND t.MinYear=s.BirthYear ORDER BY s.SNO;
+EXIT: 0
+STDOUT:
+SNO	SName	College
+S03	伍民	CS
+S04	闵红	ACC
+S05	张小红	ACC
+STDERR:

@@ -1,0 +1,11 @@
+SQL:
+SELECT s.SupplierNO,s.SupplierName,s.Address,SUM(g.Number) AS SupplyTotal
+FROM Supplier AS s JOIN Goods AS g ON g.SupplierNO=s.SupplierNO
+GROUP BY s.SupplierNO,s.SupplierName,s.Address
+HAVING SUM(g.Number)>50 ORDER BY SupplyTotal DESC,s.SupplierNO;
+EXIT: 0
+STDOUT:
+SupplierNO	SupplierName	Address	SupplyTotal
+sup001	卡夫食品	广东佛山	100
+sup003	飞鹤食品	重庆解放碑	65
+STDERR:

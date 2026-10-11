@@ -1,0 +1,125 @@
+
+SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA='SuperMarket'
+ORDER BY TABLE_NAME, ORDINAL_POSITION;
+SELECT TABLE_NAME, CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM information_schema.TABLE_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA='SuperMarket'
+ORDER BY TABLE_NAME, CONSTRAINT_NAME;
+SELECT TABLE_NAME, INDEX_NAME, NON_UNIQUE, SEQ_IN_INDEX, COLUMN_NAME, COLLATION
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA='SuperMarket' ORDER BY TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX;
+SELECT 'Category' AS table_name, COUNT(*) AS rows_count FROM Category UNION ALL
+SELECT 'Supplier',COUNT(*) FROM Supplier UNION ALL
+SELECT 'Student',COUNT(*) FROM Student UNION ALL
+SELECT 'Goods',COUNT(*) FROM Goods UNION ALL
+SELECT 'SaleBill',COUNT(*) FROM SaleBill;
+
+
+--------------
+SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY
+FROM information_schema.COLUMNS
+WHERE TABLE_SCHEMA='SuperMarket'
+ORDER BY TABLE_NAME, ORDINAL_POSITION
+--------------
+
++------------+--------------+---------------+-------------+------------+
+| TABLE_NAME | COLUMN_NAME  | COLUMN_TYPE   | IS_NULLABLE | COLUMN_KEY |
++------------+--------------+---------------+-------------+------------+
+| Category   | CategoryNO   | varchar(8)    | NO          | PRI        |
+| Category   | CategoryName | varchar(30)   | NO          |            |
+| Category   | Descriptions | varchar(200)  | YES         |            |
+| Goods      | GoodsNO      | varchar(8)    | NO          | PRI        |
+| Goods      | SupplierNO   | varchar(8)    | NO          | MUL        |
+| Goods      | CategoryNO   | varchar(8)    | NO          | MUL        |
+| Goods      | GoodsName    | varchar(60)   | NO          |            |
+| Goods      | InPrice      | decimal(10,1) | NO          |            |
+| Goods      | SalePrice    | decimal(10,2) | NO          |            |
+| Goods      | Number       | int           | NO          |            |
+| Goods      | ProductTime  | date          | NO          |            |
+| Goods      | QGperiod     | int           | YES         |            |
+| SaleBill   | GoodsNO      | varchar(8)    | NO          | PRI        |
+| SaleBill   | SNO          | varchar(8)    | NO          | PRI        |
+| SaleBill   | HappenTime   | date          | NO          |            |
+| SaleBill   | Number       | int           | NO          |            |
+| Student    | SNO          | varchar(8)    | NO          | PRI        |
+| Student    | SName        | varchar(30)   | NO          |            |
+| Student    | Gender       | varchar(2)    | NO          |            |
+| Student    | College      | varchar(10)   | NO          |            |
+| Student    | Major        | varchar(10)   | NO          |            |
+| Student    | WeiXin       | varchar(40)   | YES         |            |
+| Supplier   | SupplierNO   | varchar(8)    | NO          | PRI        |
+| Supplier   | SupplierName | varchar(60)   | NO          |            |
+| Supplier   | Address      | varchar(100)  | NO          |            |
+| Supplier   | Number       | varchar(20)   | NO          |            |
++------------+--------------+---------------+-------------+------------+
+26 rows in set
+
+--------------
+SELECT TABLE_NAME, CONSTRAINT_NAME, CONSTRAINT_TYPE
+FROM information_schema.TABLE_CONSTRAINTS
+WHERE CONSTRAINT_SCHEMA='SuperMarket'
+ORDER BY TABLE_NAME, CONSTRAINT_NAME
+--------------
+
++------------+---------------------+-----------------+
+| TABLE_NAME | CONSTRAINT_NAME     | CONSTRAINT_TYPE |
++------------+---------------------+-----------------+
+| Category   | PRIMARY             | PRIMARY KEY     |
+| Category   | uq_category_no_name | UNIQUE          |
+| Goods      | fk_goods_category   | FOREIGN KEY     |
+| Goods      | fk_goods_supplier   | FOREIGN KEY     |
+| Goods      | PRIMARY             | PRIMARY KEY     |
+| SaleBill   | chk_salebill_range  | CHECK           |
+| SaleBill   | fk_salebill_goods   | FOREIGN KEY     |
+| SaleBill   | fk_salebill_student | FOREIGN KEY     |
+| SaleBill   | PRIMARY             | PRIMARY KEY     |
+| Student    | PRIMARY             | PRIMARY KEY     |
+| Supplier   | PRIMARY             | PRIMARY KEY     |
++------------+---------------------+-----------------+
+11 rows in set
+
+--------------
+SELECT TABLE_NAME, INDEX_NAME, NON_UNIQUE, SEQ_IN_INDEX, COLUMN_NAME, COLLATION
+FROM information_schema.STATISTICS
+WHERE TABLE_SCHEMA='SuperMarket' ORDER BY TABLE_NAME, INDEX_NAME, SEQ_IN_INDEX
+--------------
+
++------------+---------------------+------------+--------------+--------------+-----------+
+| TABLE_NAME | INDEX_NAME          | NON_UNIQUE | SEQ_IN_INDEX | COLUMN_NAME  | COLLATION |
++------------+---------------------+------------+--------------+--------------+-----------+
+| Category   | PRIMARY             |          0 |            1 | CategoryNO   | A         |
+| Category   | uq_category_no_name |          0 |            1 | CategoryNO   | A         |
+| Category   | uq_category_no_name |          0 |            2 | CategoryName | D         |
+| Goods      | fk_goods_category   |          1 |            1 | CategoryNO   | A         |
+| Goods      | fk_goods_supplier   |          1 |            1 | SupplierNO   | A         |
+| Goods      | PRIMARY             |          0 |            1 | GoodsNO      | A         |
+| SaleBill   | fk_salebill_student |          1 |            1 | SNO          | A         |
+| SaleBill   | PRIMARY             |          0 |            1 | GoodsNO      | A         |
+| SaleBill   | PRIMARY             |          0 |            2 | SNO          | A         |
+| Student    | PRIMARY             |          0 |            1 | SNO          | A         |
+| Supplier   | PRIMARY             |          0 |            1 | SupplierNO   | A         |
++------------+---------------------+------------+--------------+--------------+-----------+
+11 rows in set
+
+--------------
+SELECT 'Category' AS table_name, COUNT(*) AS rows_count FROM Category UNION ALL
+SELECT 'Supplier',COUNT(*) FROM Supplier UNION ALL
+SELECT 'Student',COUNT(*) FROM Student UNION ALL
+SELECT 'Goods',COUNT(*) FROM Goods UNION ALL
+SELECT 'SaleBill',COUNT(*) FROM SaleBill
+--------------
+
++------------+------------+
+| table_name | rows_count |
++------------+------------+
+| Category   |          0 |
+| Supplier   |          0 |
+| Student    |          0 |
+| Goods      |          0 |
+| SaleBill   |          0 |
++------------+------------+
+5 rows in set
+
+Bye

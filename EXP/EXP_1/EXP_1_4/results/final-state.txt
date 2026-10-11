@@ -1,0 +1,15 @@
+SQL:
+SELECT 'Category' AS table_name,COUNT(*) AS rows_count FROM Category
+UNION ALL SELECT 'Supplier',COUNT(*) FROM Supplier
+UNION ALL SELECT 'Student',COUNT(*) FROM Student
+UNION ALL SELECT 'Goods',COUNT(*) FROM Goods
+UNION ALL SELECT 'SaleBill',COUNT(*) FROM SaleBill;
+EXIT: 0
+STDOUT:
+table_name	rows_count
+Category	3
+Supplier	5
+Student	6
+Goods	4
+SaleBill	6
+STDERR:

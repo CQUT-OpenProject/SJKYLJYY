@@ -1,0 +1,52 @@
+USE SuperMarket;
+CREATE TABLE SaleBill (
+  GoodsNO VARCHAR(8) NOT NULL,
+  SNO VARCHAR(8) NOT NULL,
+  HappenTime DATE NOT NULL,
+  Number INT NOT NULL,
+  CONSTRAINT pk_salebill PRIMARY KEY (GoodsNO, SNO),
+  CONSTRAINT fk_salebill_goods FOREIGN KEY (GoodsNO)
+    REFERENCES Goods (GoodsNO),
+  CONSTRAINT fk_salebill_student FOREIGN KEY (SNO)
+    REFERENCES Student (SNO)
+) ENGINE=InnoDB;
+SHOW CREATE TABLE SaleBill;
+
+
+--------------
+CREATE TABLE SaleBill (
+  GoodsNO VARCHAR(8) NOT NULL,
+  SNO VARCHAR(8) NOT NULL,
+  HappenTime DATE NOT NULL,
+  Number INT NOT NULL,
+  CONSTRAINT pk_salebill PRIMARY KEY (GoodsNO, SNO),
+  CONSTRAINT fk_salebill_goods FOREIGN KEY (GoodsNO)
+    REFERENCES Goods (GoodsNO),
+  CONSTRAINT fk_salebill_student FOREIGN KEY (SNO)
+    REFERENCES Student (SNO)
+) ENGINE=InnoDB
+--------------
+
+Query OK, 0 rows affected
+
+--------------
+SHOW CREATE TABLE SaleBill
+--------------
+
++----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
++----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| SaleBill | CREATE TABLE `SaleBill` (
+  `GoodsNO` varchar(8) NOT NULL,
+  `SNO` varchar(8) NOT NULL,
+  `HappenTime` date NOT NULL,
+  `Number` int NOT NULL,
+  PRIMARY KEY (`GoodsNO`,`SNO`),
+  KEY `fk_salebill_student` (`SNO`),
+  CONSTRAINT `fk_salebill_goods` FOREIGN KEY (`GoodsNO`) REFERENCES `Goods` (`GoodsNO`),
+  CONSTRAINT `fk_salebill_student` FOREIGN KEY (`SNO`) REFERENCES `Student` (`SNO`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++----------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set
+
+Bye

@@ -1,0 +1,8 @@
+SQL:
+SELECT SupplierName,Phone,Address FROM V_SU_GOOD
+WHERE StockTotal<50 ORDER BY SupplierNO;
+EXIT: 0
+STDOUT:
+SupplierName	Phone	Address
+缙云日化	19648768903	重庆北碚
+STDERR:

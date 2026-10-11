@@ -1,0 +1,1328 @@
+{
+  "database": "SuperMarket_EXP_3",
+  "environment": {
+    "sql": "SELECT VERSION() AS version,CURRENT_DATE() AS execution_date,\nYEAR(CURRENT_DATE()) AS age_reference_year,@@sql_mode AS sql_mode;",
+    "exit_code": 0,
+    "stdout": "version\texecution_date\tage_reference_year\tsql_mode\n8.4.11\t2026-10-11\t2026\tONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION\n",
+    "stderr": "",
+    "columns": [
+      "version",
+      "execution_date",
+      "age_reference_year",
+      "sql_mode"
+    ],
+    "rows": [
+      [
+        "8.4.11",
+        "2026-10-11",
+        "2026",
+        "ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+      ]
+    ]
+  },
+  "tasks": [
+    {
+      "number": 1,
+      "title": "查询全部商品信息",
+      "analysis": "返回原始样本中的 4 件商品。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0001\tsup001\tCN001\t优乐美奶茶\t2.5\t3.50\t100\t2019-12-20\nGN0002\tsup002\tCN001\t雀巢咖啡\t4.0\t5.80\t50\t2017-06-08\nGN0005\tsup003\tCN002\t飘柔洗发水\t15.0\t19.80\t65\t2019-05-29\nGN0007\tsup005\tCN005\t小绵羊被套\t120.0\t150.00\t28\t2019-11-22\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "sup001",
+              "CN001",
+              "优乐美奶茶",
+              "2.5",
+              "3.50",
+              "100",
+              "2019-12-20"
+            ],
+            [
+              "GN0002",
+              "sup002",
+              "CN001",
+              "雀巢咖啡",
+              "4.0",
+              "5.80",
+              "50",
+              "2017-06-08"
+            ],
+            [
+              "GN0005",
+              "sup003",
+              "CN002",
+              "飘柔洗发水",
+              "15.0",
+              "19.80",
+              "65",
+              "2019-05-29"
+            ],
+            [
+              "GN0007",
+              "sup005",
+              "CN005",
+              "小绵羊被套",
+              "120.0",
+              "150.00",
+              "28",
+              "2019-11-22"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "title": "查询类别 cn002 的商品",
+      "analysis": "排序规则不区分英文字母大小写，返回飘柔洗发水。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods WHERE CategoryNO='cn002' ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0005\tsup003\tCN002\t飘柔洗发水\t15.0\t19.80\t65\t2019-05-29\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0005",
+              "sup003",
+              "CN002",
+              "飘柔洗发水",
+              "15.0",
+              "19.80",
+              "65",
+              "2019-05-29"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "查询类别 cn001 或 cn002 的商品",
+      "analysis": "IN 表达两种类别之一，返回 3 件商品。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods WHERE CategoryNO IN ('cn001','cn002')\nORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0001\tsup001\tCN001\t优乐美奶茶\t2.5\t3.50\t100\t2019-12-20\nGN0002\tsup002\tCN001\t雀巢咖啡\t4.0\t5.80\t50\t2017-06-08\nGN0005\tsup003\tCN002\t飘柔洗发水\t15.0\t19.80\t65\t2019-05-29\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "sup001",
+              "CN001",
+              "优乐美奶茶",
+              "2.5",
+              "3.50",
+              "100",
+              "2019-12-20"
+            ],
+            [
+              "GN0002",
+              "sup002",
+              "CN001",
+              "雀巢咖啡",
+              "4.0",
+              "5.80",
+              "50",
+              "2017-06-08"
+            ],
+            [
+              "GN0005",
+              "sup003",
+              "CN002",
+              "飘柔洗发水",
+              "15.0",
+              "19.80",
+              "65",
+              "2019-05-29"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "查询 cn005 且进价大于二十的商品",
+      "analysis": "两个条件用 AND 连接，返回小绵羊被套。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods WHERE CategoryNO='cn005' AND InPrice>20;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0007\tsup005\tCN005\t小绵羊被套\t120.0\t150.00\t28\t2019-11-22\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0007",
+              "sup005",
+              "CN005",
+              "小绵羊被套",
+              "120.0",
+              "150.00",
+              "28",
+              "2019-11-22"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "title": "查询库存数量小于十的商品",
+      "analysis": "原始库存最小值为 28，因此返回空集。",
+      "results": [
+        {
+          "sql": "SELECT GoodsNO,SupplierNO,GoodsName,Number\nFROM Goods WHERE Number<10 ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "title": "查询有购买记录的学生学号",
+      "analysis": "DISTINCT 去除同一学生多次购买产生的重复学号，返回 4 人。",
+      "results": [
+        {
+          "sql": "SELECT DISTINCT SNO FROM SaleBill ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\nS01\nS02\nS03\nS05\n",
+          "stderr": "",
+          "columns": [
+            "SNO"
+          ],
+          "rows": [
+            [
+              "S01"
+            ],
+            [
+              "S02"
+            ],
+            [
+              "S03"
+            ],
+            [
+              "S05"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "查询 IT 专业学生学号姓名和年龄",
+      "analysis": "使用本次执行年份减出生年份得到年历年龄。只有李明属于 IT；当前年龄值见实际结果。",
+      "results": [
+        {
+          "sql": "SELECT SNO,SName,YEAR(CURRENT_DATE())-BirthYear AS Age\nFROM Student WHERE Major='IT' ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tAge\nS01\t李明\t27\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "Age"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "27"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "查询年龄二十二至二十四的学生",
+      "analysis": "本次查询年份为 2026，样本学生年历年龄为 27～30，返回空集。没有把系统时间改成教学年份。",
+      "results": [
+        {
+          "sql": "SELECT SNO,SName,College,Major,YEAR(CURRENT_DATE())-BirthYear AS Age\nFROM Student WHERE YEAR(CURRENT_DATE())-BirthYear BETWEEN 22 AND 24\nORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "title": "查询姓张的学生",
+      "analysis": "LIKE 的前缀匹配返回张小红。",
+      "results": [
+        {
+          "sql": "SELECT SNO,SName,College FROM Student WHERE SName LIKE '张%'\nORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "title": "查询库存二十以上商品并按数量降序",
+      "analysis": "四件商品均满足条件，数量依次为 100、65、50、28。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods WHERE Number>=20 ORDER BY Number DESC,GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0001\tsup001\tCN001\t优乐美奶茶\t2.5\t3.50\t100\t2019-12-20\nGN0005\tsup003\tCN002\t飘柔洗发水\t15.0\t19.80\t65\t2019-05-29\nGN0002\tsup002\tCN001\t雀巢咖啡\t4.0\t5.80\t50\t2017-06-08\nGN0007\tsup005\tCN005\t小绵羊被套\t120.0\t150.00\t28\t2019-11-22\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "sup001",
+              "CN001",
+              "优乐美奶茶",
+              "2.5",
+              "3.50",
+              "100",
+              "2019-12-20"
+            ],
+            [
+              "GN0005",
+              "sup003",
+              "CN002",
+              "飘柔洗发水",
+              "15.0",
+              "19.80",
+              "65",
+              "2019-05-29"
+            ],
+            [
+              "GN0002",
+              "sup002",
+              "CN001",
+              "雀巢咖啡",
+              "4.0",
+              "5.80",
+              "50",
+              "2017-06-08"
+            ],
+            [
+              "GN0007",
+              "sup005",
+              "CN005",
+              "小绵羊被套",
+              "120.0",
+              "150.00",
+              "28",
+              "2019-11-22"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "title": "查询库存十以内商品并按类别和库存排序",
+      "analysis": "按包含 10 理解“十以内”，当前样本没有满足条件的商品。",
+      "results": [
+        {
+          "sql": "SELECT GoodsNO,GoodsName,CategoryNO,Number FROM Goods\nWHERE Number<=10 ORDER BY CategoryNO ASC,Number DESC,GoodsNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "title": "查询库存数量排名前三的商品",
+      "analysis": "使用 LIMIT 3，数量相同时以商品编码确定输出顺序。",
+      "results": [
+        {
+          "sql": "SELECT * FROM Goods ORDER BY Number DESC,GoodsNO LIMIT 3;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSupplierNO\tCategoryNO\tGoodsName\tInPrice\tSalePrice\tNumber\tProductTime\nGN0001\tsup001\tCN001\t优乐美奶茶\t2.5\t3.50\t100\t2019-12-20\nGN0005\tsup003\tCN002\t飘柔洗发水\t15.0\t19.80\t65\t2019-05-29\nGN0002\tsup002\tCN001\t雀巢咖啡\t4.0\t5.80\t50\t2017-06-08\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SupplierNO",
+            "CategoryNO",
+            "GoodsName",
+            "InPrice",
+            "SalePrice",
+            "Number",
+            "ProductTime"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "sup001",
+              "CN001",
+              "优乐美奶茶",
+              "2.5",
+              "3.50",
+              "100",
+              "2019-12-20"
+            ],
+            [
+              "GN0005",
+              "sup003",
+              "CN002",
+              "飘柔洗发水",
+              "15.0",
+              "19.80",
+              "65",
+              "2019-05-29"
+            ],
+            [
+              "GN0002",
+              "sup002",
+              "CN001",
+              "雀巢咖啡",
+              "4.0",
+              "5.80",
+              "50",
+              "2017-06-08"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "title": "查询 cn001 库存最大的商品",
+      "analysis": "使用最大值子查询，若有并列最大值会全部返回。",
+      "results": [
+        {
+          "sql": "SELECT GoodsNO,GoodsName,Number FROM Goods\nWHERE CategoryNO='cn001' AND Number=(\n  SELECT MAX(Number) FROM Goods WHERE CategoryNO='cn001')\nORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\tNumber\nGN0001\t优乐美奶茶\t100\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName",
+            "Number"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "优乐美奶茶",
+              "100"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "title": "统计 MIS 专业学生人数",
+      "analysis": "MIS 专业有徐好、伍民两人。",
+      "results": [
+        {
+          "sql": "SELECT COUNT(*) AS StudentCount FROM Student WHERE Major='MIS';",
+          "exit_code": 0,
+          "stdout": "StudentCount\n2\n",
+          "stderr": "",
+          "columns": [
+            "StudentCount"
+          ],
+          "rows": [
+            [
+              "2"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "title": "按学院统计二十岁以上人数",
+      "analysis": "先按年龄过滤，再按学院分组，ACC 为 2 人、CS 为 3 人。",
+      "results": [
+        {
+          "sql": "SELECT College,COUNT(*) AS StudentCount FROM Student\nWHERE YEAR(CURRENT_DATE())-BirthYear>20\nGROUP BY College ORDER BY College;",
+          "exit_code": 0,
+          "stdout": "College\tStudentCount\nACC\t2\nCS\t3\n",
+          "stderr": "",
+          "columns": [
+            "College",
+            "StudentCount"
+          ],
+          "rows": [
+            [
+              "ACC",
+              "2"
+            ],
+            [
+              "CS",
+              "3"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "title": "统计 2018 年各商品销量",
+      "analysis": "按销售日期筛选，2018 年只有 GN0002 销售 2 件。",
+      "results": [
+        {
+          "sql": "SELECT GoodsNO,SUM(Number) AS SaleTotal FROM SaleBill\nWHERE HappenTime>='2018-01-01' AND HappenTime<'2019-01-01'\nGROUP BY GoodsNO ORDER BY GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tSaleTotal\nGN0002\t2\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "SaleTotal"
+          ],
+          "rows": [
+            [
+              "GN0002",
+              "2"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "title": "查询学生人数在三人以上的学院",
+      "analysis": "“三人以上”按包含 3 理解，CS 满足条件；HAVING 用于过滤分组结果。",
+      "results": [
+        {
+          "sql": "SELECT College,COUNT(*) AS StudentCount FROM Student\nGROUP BY College HAVING COUNT(*)>=3 ORDER BY College;",
+          "exit_code": 0,
+          "stdout": "College\tStudentCount\nCS\t3\n",
+          "stderr": "",
+          "columns": [
+            "College",
+            "StudentCount"
+          ],
+          "rows": [
+            [
+              "CS",
+              "3"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "title": "查询 2019 年购买总数超过五的学生",
+      "analysis": "该年只有 S05 购买 2 件，因此返回空集。",
+      "results": [
+        {
+          "sql": "SELECT SNO,SUM(Number) AS BuyTotal FROM SaleBill\nWHERE HappenTime>='2019-01-01' AND HappenTime<'2020-01-01'\nGROUP BY SNO HAVING SUM(Number)>5 ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "title": "查询咖啡类商品平均售价",
+      "analysis": "按 CategoryName 判断类别；素材把奶茶也归在咖啡类，沿用该分类，平均价为 4.65。",
+      "results": [
+        {
+          "sql": "SELECT CAST(AVG(g.SalePrice) AS DECIMAL(10,2)) AS AvgPrice\nFROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO\nWHERE c.CategoryName='咖啡';",
+          "exit_code": 0,
+          "stdout": "AvgPrice\n4.65\n",
+          "stderr": "",
+          "columns": [
+            "AvgPrice"
+          ],
+          "rows": [
+            [
+              "4.65"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "title": "查询与张小红同学院的学生",
+      "analysis": "题目没有排除本人，因此返回闵红和张小红。",
+      "results": [
+        {
+          "sql": "SELECT SNO,SName,College FROM Student WHERE College IN\n(SELECT College FROM Student WHERE SName='张小红') ORDER BY SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS04\t闵红\tACC\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S04",
+              "闵红",
+              "ACC"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 21,
+      "title": "查询全部销售情况并按日期降序",
+      "analysis": "销售记录连接商品及学生，按日期降序返回 6 条明细。",
+      "results": [
+        {
+          "sql": "SELECT g.GoodsNO,g.GoodsName,s.SName,b.HappenTime,b.Number\nFROM SaleBill AS b JOIN Goods AS g ON g.GoodsNO=b.GoodsNO\nJOIN Student AS s ON s.SNO=b.SNO\nORDER BY b.HappenTime DESC,g.GoodsNO,s.SNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\tSName\tHappenTime\tNumber\nGN0001\t优乐美奶茶\t李明\t2020-06-09\t3\nGN0005\t飘柔洗发水\t张小红\t2020-06-01\t1\nGN0001\t优乐美奶茶\t徐好\t2020-05-03\t1\nGN0001\t优乐美奶茶\t伍民\t2020-04-07\t1\nGN0002\t雀巢咖啡\t张小红\t2019-06-26\t2\nGN0002\t雀巢咖啡\t徐好\t2018-05-08\t2\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName",
+            "SName",
+            "HappenTime",
+            "Number"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "优乐美奶茶",
+              "李明",
+              "2020-06-09",
+              "3"
+            ],
+            [
+              "GN0005",
+              "飘柔洗发水",
+              "张小红",
+              "2020-06-01",
+              "1"
+            ],
+            [
+              "GN0001",
+              "优乐美奶茶",
+              "徐好",
+              "2020-05-03",
+              "1"
+            ],
+            [
+              "GN0001",
+              "优乐美奶茶",
+              "伍民",
+              "2020-04-07",
+              "1"
+            ],
+            [
+              "GN0002",
+              "雀巢咖啡",
+              "张小红",
+              "2019-06-26",
+              "2"
+            ],
+            [
+              "GN0002",
+              "雀巢咖啡",
+              "徐好",
+              "2018-05-08",
+              "2"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 22,
+      "title": "查询购买商品的学生",
+      "analysis": "EXISTS 避免重复返回同一学生。",
+      "results": [
+        {
+          "sql": "SELECT s.SNO,s.SName,s.College FROM Student AS s\nWHERE EXISTS (SELECT 1 FROM SaleBill AS b WHERE b.SNO=s.SNO)\nORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS01\t李明\tCS\nS02\t徐好\tCS\nS03\t伍民\tCS\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "CS"
+            ],
+            [
+              "S02",
+              "徐好",
+              "CS"
+            ],
+            [
+              "S03",
+              "伍民",
+              "CS"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "title": "查询购买咖啡类商品的学生",
+      "analysis": "连接四表后 DISTINCT 去重，返回 4 人。",
+      "results": [
+        {
+          "sql": "SELECT DISTINCT s.SNO,s.SName,s.College FROM Student AS s\nJOIN SaleBill AS b ON b.SNO=s.SNO\nJOIN Goods AS g ON g.GoodsNO=b.GoodsNO\nJOIN Category AS c ON c.CategoryNO=g.CategoryNO\nWHERE c.CategoryName='咖啡' ORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS01\t李明\tCS\nS02\t徐好\tCS\nS03\t伍民\tCS\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "CS"
+            ],
+            [
+              "S02",
+              "徐好",
+              "CS"
+            ],
+            [
+              "S03",
+              "伍民",
+              "CS"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 24,
+      "title": "用连接和子查询查询未出售商品",
+      "analysis": "分别使用 LEFT JOIN 判空和 NOT EXISTS，两个结果相同，均为 GN0007。",
+      "results": [
+        {
+          "sql": "SELECT g.GoodsNO,g.GoodsName,c.CategoryName,g.SalePrice,g.Number\nFROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO\nLEFT JOIN SaleBill AS b ON b.GoodsNO=g.GoodsNO\nWHERE b.GoodsNO IS NULL ORDER BY g.GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\tCategoryName\tSalePrice\tNumber\nGN0007\t小绵羊被套\t床上用品\t150.00\t28\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName",
+            "CategoryName",
+            "SalePrice",
+            "Number"
+          ],
+          "rows": [
+            [
+              "GN0007",
+              "小绵羊被套",
+              "床上用品",
+              "150.00",
+              "28"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT g.GoodsNO,g.GoodsName,c.CategoryName,g.SalePrice,g.Number\nFROM Goods AS g JOIN Category AS c ON c.CategoryNO=g.CategoryNO\nWHERE NOT EXISTS (SELECT 1 FROM SaleBill AS b\n                  WHERE b.GoodsNO=g.GoodsNO) ORDER BY g.GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\tCategoryName\tSalePrice\tNumber\nGN0007\t小绵羊被套\t床上用品\t150.00\t28\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName",
+            "CategoryName",
+            "SalePrice",
+            "Number"
+          ],
+          "rows": [
+            [
+              "GN0007",
+              "小绵羊被套",
+              "床上用品",
+              "150.00",
+              "28"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "title": "查询买过 gn001 或 gn002 的学生",
+      "analysis": "原题短商品号按素材映射为 GN0001、GN0002，OR 表达任意一种。",
+      "results": [
+        {
+          "sql": "SELECT DISTINCT s.SNO,s.SName,s.College FROM Student AS s\nJOIN SaleBill AS b ON b.SNO=s.SNO\nWHERE b.GoodsNO IN ('GN0001','GN0002') ORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS01\t李明\tCS\nS02\t徐好\tCS\nS03\t伍民\tCS\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S01",
+              "李明",
+              "CS"
+            ],
+            [
+              "S02",
+              "徐好",
+              "CS"
+            ],
+            [
+              "S03",
+              "伍民",
+              "CS"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "title": "查询同时买过 gn001 和 gn002 的学生",
+      "analysis": "先限定两种商品，再要求去重商品数为 2，只有徐好同时购买。",
+      "results": [
+        {
+          "sql": "SELECT s.SNO,s.SName,s.College FROM Student AS s\nJOIN SaleBill AS b ON b.SNO=s.SNO\nWHERE b.GoodsNO IN ('GN0001','GN0002')\nGROUP BY s.SNO,s.SName,s.College\nHAVING COUNT(DISTINCT b.GoodsNO)=2 ORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS02\t徐好\tCS\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S02",
+              "徐好",
+              "CS"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "title": "用相关子查询和派生表查询各学院年龄最大者",
+      "analysis": "出生年份越小年龄越大；ACC 有两名并列，必须一起返回。两种实现结果一致。",
+      "results": [
+        {
+          "sql": "SELECT s.SNO,s.SName,s.College FROM Student AS s\nWHERE s.BirthYear=(SELECT MIN(t.BirthYear) FROM Student AS t\n                   WHERE t.College=s.College) ORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS03\t伍民\tCS\nS04\t闵红\tACC\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S03",
+              "伍民",
+              "CS"
+            ],
+            [
+              "S04",
+              "闵红",
+              "ACC"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        },
+        {
+          "sql": "SELECT s.SNO,s.SName,s.College FROM Student AS s\nJOIN (SELECT College,MIN(BirthYear) AS MinYear FROM Student\n      GROUP BY College) AS t\nON t.College=s.College AND t.MinYear=s.BirthYear ORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "SNO\tSName\tCollege\nS03\t伍民\tCS\nS04\t闵红\tACC\nS05\t张小红\tACC\n",
+          "stderr": "",
+          "columns": [
+            "SNO",
+            "SName",
+            "College"
+          ],
+          "rows": [
+            [
+              "S03",
+              "伍民",
+              "CS"
+            ],
+            [
+              "S04",
+              "闵红",
+              "ACC"
+            ],
+            [
+              "S05",
+              "张小红",
+              "ACC"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "title": "统计每个商品的销售总量",
+      "analysis": "LEFT JOIN 保留未出售商品，COALESCE 将其销售总量记为 0。",
+      "results": [
+        {
+          "sql": "SELECT g.GoodsNO,g.GoodsName,COALESCE(SUM(b.Number),0) AS SaleTotal\nFROM Goods AS g LEFT JOIN SaleBill AS b ON b.GoodsNO=g.GoodsNO\nGROUP BY g.GoodsNO,g.GoodsName ORDER BY g.GoodsNO;",
+          "exit_code": 0,
+          "stdout": "GoodsNO\tGoodsName\tSaleTotal\nGN0001\t优乐美奶茶\t5\nGN0002\t雀巢咖啡\t4\nGN0005\t飘柔洗发水\t1\nGN0007\t小绵羊被套\t0\n",
+          "stderr": "",
+          "columns": [
+            "GoodsNO",
+            "GoodsName",
+            "SaleTotal"
+          ],
+          "rows": [
+            [
+              "GN0001",
+              "优乐美奶茶",
+              "5"
+            ],
+            [
+              "GN0002",
+              "雀巢咖啡",
+              "4"
+            ],
+            [
+              "GN0005",
+              "飘柔洗发水",
+              "1"
+            ],
+            [
+              "GN0007",
+              "小绵羊被套",
+              "0"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "title": "查询 2019 年购买总数超过五的学生姓名和学院",
+      "analysis": "与第 18 项同一条件，连接 Student 增加姓名和学院，本样本返回空集。",
+      "results": [
+        {
+          "sql": "SELECT s.SName,s.College,SUM(b.Number) AS BuyTotal\nFROM Student AS s JOIN SaleBill AS b ON b.SNO=s.SNO\nWHERE b.HappenTime>='2019-01-01' AND b.HappenTime<'2020-01-01'\nGROUP BY s.SNO,s.SName,s.College HAVING SUM(b.Number)>5\nORDER BY s.SNO;",
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": "",
+          "columns": [],
+          "rows": [],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "number": 30,
+      "title": "查询供应总数超过五十的供应商",
+      "analysis": "“供应商品总数”按 Goods.Number 的库存数量求和，不按商品种类数计算。返回卡夫食品 100 件、飞鹤食品 65 件。",
+      "results": [
+        {
+          "sql": "SELECT s.SupplierNO,s.SupplierName,s.Address,SUM(g.Number) AS SupplyTotal\nFROM Supplier AS s JOIN Goods AS g ON g.SupplierNO=s.SupplierNO\nGROUP BY s.SupplierNO,s.SupplierName,s.Address\nHAVING SUM(g.Number)>50 ORDER BY SupplyTotal DESC,s.SupplierNO;",
+          "exit_code": 0,
+          "stdout": "SupplierNO\tSupplierName\tAddress\tSupplyTotal\nsup001\t卡夫食品\t广东佛山\t100\nsup003\t飞鹤食品\t重庆解放碑\t65\n",
+          "stderr": "",
+          "columns": [
+            "SupplierNO",
+            "SupplierName",
+            "Address",
+            "SupplyTotal"
+          ],
+          "rows": [
+            [
+              "sup001",
+              "卡夫食品",
+              "广东佛山",
+              "100"
+            ],
+            [
+              "sup003",
+              "飞鹤食品",
+              "重庆解放碑",
+              "65"
+            ]
+          ],
+          "expected_error": 0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "low-inventory-query",
+      "sql": "START TRANSACTION;\nINSERT INTO Goods VALUES\n('GNTEST1','sup001','CN001','库存测试一',1,2,3,'2026-10-11'),\n('GNTEST2','sup001','CN001','库存测试二',1,2,9,'2026-10-11');\nSELECT GoodsNO,SupplierNO,GoodsName,Number\nFROM Goods WHERE Number<10 ORDER BY GoodsNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "GoodsNO\tSupplierNO\tGoodsName\tNumber\nGNTEST1\tsup001\t库存测试一\t3\nGNTEST2\tsup001\t库存测试二\t9\n",
+      "stderr": "",
+      "columns": [
+        "GoodsNO",
+        "SupplierNO",
+        "GoodsName",
+        "Number"
+      ],
+      "rows": [
+        [
+          "GNTEST1",
+          "sup001",
+          "库存测试一",
+          "3"
+        ],
+        [
+          "GNTEST2",
+          "sup001",
+          "库存测试二",
+          "9"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "inventory-two-column-sort",
+      "sql": "START TRANSACTION;\nINSERT INTO Goods VALUES\n('GNTEST1','sup001','CN001','库存测试一',1,2,3,'2026-10-11'),\n('GNTEST2','sup001','CN001','库存测试二',1,2,9,'2026-10-11');\nSELECT GoodsNO,GoodsName,CategoryNO,Number FROM Goods\nWHERE Number<=10 ORDER BY CategoryNO ASC,Number DESC,GoodsNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "GoodsNO\tGoodsName\tCategoryNO\tNumber\nGNTEST2\t库存测试二\tCN001\t9\nGNTEST1\t库存测试一\tCN001\t3\n",
+      "stderr": "",
+      "columns": [
+        "GoodsNO",
+        "GoodsName",
+        "CategoryNO",
+        "Number"
+      ],
+      "rows": [
+        [
+          "GNTEST2",
+          "库存测试二",
+          "CN001",
+          "9"
+        ],
+        [
+          "GNTEST1",
+          "库存测试一",
+          "CN001",
+          "3"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "age-range-positive",
+      "sql": "START TRANSACTION;\nINSERT INTO Student VALUES\n('STEST','年龄测试',YEAR(CURRENT_DATE())-23,NULL,'CS','IT','wxtest');\nSELECT SNO,SName,College,Major,YEAR(CURRENT_DATE())-BirthYear AS Age\nFROM Student WHERE YEAR(CURRENT_DATE())-BirthYear BETWEEN 22 AND 24\nORDER BY SNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "SNO\tSName\tCollege\tMajor\tAge\nSTEST\t年龄测试\tCS\tIT\t23\n",
+      "stderr": "",
+      "columns": [
+        "SNO",
+        "SName",
+        "College",
+        "Major",
+        "Age"
+      ],
+      "rows": [
+        [
+          "STEST",
+          "年龄测试",
+          "CS",
+          "IT",
+          "23"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "year-having-positive",
+      "sql": "START TRANSACTION;\nINSERT INTO SaleBill VALUES ('GN0007','S04','2019-01-02',6);\nSELECT SNO,SUM(Number) AS BuyTotal FROM SaleBill\nWHERE HappenTime>='2019-01-01' AND HappenTime<'2020-01-01'\nGROUP BY SNO HAVING SUM(Number)>5 ORDER BY SNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "SNO\tBuyTotal\nS04\t6\n",
+      "stderr": "",
+      "columns": [
+        "SNO",
+        "BuyTotal"
+      ],
+      "rows": [
+        [
+          "S04",
+          "6"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "year-having-join-positive",
+      "sql": "START TRANSACTION;\nINSERT INTO SaleBill VALUES ('GN0007','S04','2019-01-02',6);\nSELECT s.SName,s.College,SUM(b.Number) AS BuyTotal\nFROM Student AS s JOIN SaleBill AS b ON b.SNO=s.SNO\nWHERE b.HappenTime>='2019-01-01' AND b.HappenTime<'2020-01-01'\nGROUP BY s.SNO,s.SName,s.College HAVING SUM(b.Number)>5\nORDER BY s.SNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "SName\tCollege\tBuyTotal\n闵红\tACC\t6\n",
+      "stderr": "",
+      "columns": [
+        "SName",
+        "College",
+        "BuyTotal"
+      ],
+      "rows": [
+        [
+          "闵红",
+          "ACC",
+          "6"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "max-inventory-ties",
+      "sql": "START TRANSACTION;\nINSERT INTO Goods VALUES\n('GNTEST','sup001','CN001','并列测试',1,2,100,'2026-10-11');\nSELECT GoodsNO,GoodsName,Number FROM Goods\nWHERE CategoryNO='cn001' AND Number=(\n  SELECT MAX(Number) FROM Goods WHERE CategoryNO='cn001')\nORDER BY GoodsNO;\nROLLBACK;",
+      "exit_code": 0,
+      "stdout": "GoodsNO\tGoodsName\tNumber\nGN0001\t优乐美奶茶\t100\nGNTEST\t并列测试\t100\n",
+      "stderr": "",
+      "columns": [
+        "GoodsNO",
+        "GoodsName",
+        "Number"
+      ],
+      "rows": [
+        [
+          "GN0001",
+          "优乐美奶茶",
+          "100"
+        ],
+        [
+          "GNTEST",
+          "并列测试",
+          "100"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    },
+    {
+      "name": "sample-state-preserved",
+      "sql": "SELECT 'Category' AS table_name,COUNT(*) AS rows_count FROM Category\nUNION ALL SELECT 'Supplier',COUNT(*) FROM Supplier\nUNION ALL SELECT 'Student',COUNT(*) FROM Student\nUNION ALL SELECT 'Goods',COUNT(*) FROM Goods\nUNION ALL SELECT 'SaleBill',COUNT(*) FROM SaleBill;",
+      "exit_code": 0,
+      "stdout": "table_name\trows_count\nCategory\t3\nSupplier\t5\nStudent\t5\nGoods\t4\nSaleBill\t6\n",
+      "stderr": "",
+      "columns": [
+        "table_name",
+        "rows_count"
+      ],
+      "rows": [
+        [
+          "Category",
+          "3"
+        ],
+        [
+          "Supplier",
+          "5"
+        ],
+        [
+          "Student",
+          "5"
+        ],
+        [
+          "Goods",
+          "4"
+        ],
+        [
+          "SaleBill",
+          "6"
+        ]
+      ],
+      "expected_error": 0,
+      "verified": true
+    }
+  ],
+  "final_counts": [
+    [
+      "Category",
+      "3"
+    ],
+    [
+      "Supplier",
+      "5"
+    ],
+    [
+      "Student",
+      "5"
+    ],
+    [
+      "Goods",
+      "4"
+    ],
+    [
+      "SaleBill",
+      "6"
+    ]
+  ]
+}
