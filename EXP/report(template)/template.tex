@@ -1,0 +1,95 @@
+% !LW recipe=tectonic
+\documentclass{sjkyljyyexp}
+
+\begin{document}
+\makecover
+\cqutBeginReportBody
+\begin{center}
+  {\heiti\zihao{3} 实验一\quad 数据定义}
+\end{center}
+
+\section{学时}
+2 学时。
+
+\section{实验类型}
+设计。
+
+\section{实验目的}
+\begin{enumerate}
+  \item 巩固数据库的基础知识。
+  \item 熟悉 SQL Server 中常用的数据类型。
+  \item 熟悉和掌握利用查询分析器进行数据表的建立、修改和删除的方法。
+  \item 利用查询分析器用 SQL 语言定义索引并进行相关操作。
+\end{enumerate}
+
+\section{实验准备}
+\begin{enumerate}
+  \item 熟悉 SQL Server 的工作环境。
+  \item 复习有关表的建立、修改和删除的 SQL 语言命令和方法。
+  \item 复习有关索引的建立、修改和删除的 SQL 语言命令和方法。
+\end{enumerate}
+
+\section{实验方法及步骤}
+\begin{enumerate}
+  \item 登录企业管理器／查询分析器。
+  \item 创建数据库或连接已建立的数据库。
+  \item 在当前数据库上建立新表，并注意定义表的主码、外码。
+  \item 修改表的结构。
+  \item 在表上建立索引。
+  \item 删除表的定义。
+\end{enumerate}
+
+\clearpage
+\section{实验结果}
+% 以下保留原题顺序及要求，不预填答案。附录需另行参考课程资料。
+\task{创建校园超市数据库 \sqlname{SuperMarket}，并在 \sqlname{SuperMarket} 中完成以下操作。}
+\answerarea
+
+\task{创建附录中的商品关系表 \sqlname{Goods}：商品编码 \sqlname{GoodsNO} 为主码，供应商编号 \sqlname{SupplierNO} 和商品类别编号 \sqlname{CategoryNO} 为外码。}
+\answerarea
+
+\task{创建附录中的学生关系表 \sqlname{student}：学号 \sqlname{SNO} 为主码，微信号 \sqlname{WeiXin} 要求唯一值，各属性数据类型根据实际情况设置。}
+\answerarea
+
+\task{创建附录中的销售关系表 \sqlname{Salebill}：\sqlname{GoodsNO} 和 \sqlname{SNO} 共同作为主码，\sqlname{GoodsNO} 和 \sqlname{SNO} 分别为外码，各属性数据类型根据实际情况设置。}
+\answerarea
+
+\task{创建附录中的商品类别表 \sqlname{Category}：商品类别编号 \sqlname{CategoryNO} 为主码。}
+\answerarea
+
+\clearpage
+\begin{center}{\heiti\zihao{4} 实验结果（续）}\end{center}
+\task{创建附录中的供应商表 \sqlname{Supplier}：供应商编号 \sqlname{SupplierNO} 为主码。}
+\answerarea
+
+\task{在 \sqlname{Goods} 表上增加“保质期”属性列 \sqlname{QGperiod}，数据类型为整型。}
+\answerarea
+
+\task{删除 \sqlname{student} 表的“出生年份”属性列。}
+\answerarea
+
+\task{在 \sqlname{SaleBill} 表上增加数量大于 0 的约束。}
+\answerarea
+
+\task{删除 \sqlname{student} 表微信号列的唯一值约束。}
+\answerarea
+
+\clearpage
+\begin{center}{\heiti\zihao{4} 实验结果（续）}\end{center}
+\task{修改 \sqlname{Goods} 表“进价”属性列为精确数值型，保留一位小数。}
+\answerarea
+
+\task{将 \sqlname{SaleBill} 表上数量的约束修改为 0～100。}
+\answerarea
+
+\task{在 \sqlname{supplier} 表上，按供应商号属性列的唯一值方式建立索引。}
+\answerarea
+
+% 原题要求 Category 上的“商品名”属性降序；按原文保留，未自行改题。
+\task{在 \sqlname{Category} 表上，按商品类别编号属性列升序和商品名属性降序建立唯一值索引。}
+\answerarea
+
+\task{删除 \sqlname{supplier} 上的唯一值索引。}
+\answerarea
+
+\end{document}
