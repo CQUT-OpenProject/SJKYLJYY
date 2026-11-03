@@ -1,0 +1,69 @@
+% !LW recipe=tectonic
+\documentclass{sjkyljyyccp}
+
+% 封面信息：在花括号内填写；实践项目与实验时间沿用原框架。
+\renewcommand{\reportproject}{数据库设计}
+\renewcommand{\reporttopic}{}
+\renewcommand{\reportclass}{}
+\renewcommand{\reportnumber}{}
+\renewcommand{\reportname}{}
+\renewcommand{\reportphone}{}
+\renewcommand{\reportteacher}{}
+\renewcommand{\reportdate}{2026.10—2026.11}
+\renewcommand{\reportpartners}{}
+
+\begin{document}
+\makecover
+\cqutBeginReportBody
+\makereportcontents
+
+% 以下保留原 Word 框架的章节、要求和填写提示，不预填具体选题内容。
+\section{项目背景}
+\subsection{选题背景}
+\templatehint{对所选题目涉及的企业（或行业）背景和主要业务活动内容进行必要的说明，指出当前业务管理模式或流程中存在的主要问题，阐述对其信息化或对现有系统进行改进的必要性和意义所在。}
+
+\subsection{系统目标}
+\templatehint{通过初步的分析，给出未来要实现的系统功能目标，绘制系统功能目标图。并简要说明系统欲采用的软件体系结构、平台、DBMS 和开发工具等。}
+
+\section{系统需求分析}
+\templatehint{通过对一小型数据库应用系统进行分析，充分了解系统的信息要求、处理要求、安全性和完整性要求，并在分析的基础上画出系统的数据流程图，写出相应的数据字典。}
+
+\subsection{业务数据流程分析}
+\templatehint{对所涉及的业务、数据流程进行分析，绘制 BPM 表达业务、数据流程的分析结果。}
+
+\subsection{数据字典}
+\templatehint{按照数据流程图分层和每层数据流程图数据对象出现的先后顺序编写相对应的详细的数据字典，数据字典应包含数据流、数据存储、数据处理、外部实体和数据项等五个部分。}
+
+\section{概念结构设计}
+\templatehint{在需求分析的基础上，应用概念模型的相关设计方法，完成数据库的概念模型设计。所设计的概念模型应为 CDM 图。}
+
+\templatehint{【请在此粘贴你的 CDM，注意实体的正确抽象以及数据项、域、主标识和各类联系的正确表达】}
+% 将模型图放入 assets/，再取消下列代码的注释并替换文件名。
+% \begin{figure}[htbp]
+%   \centering
+%   \includegraphics[width=\linewidth]{cdm.pdf}
+%   \caption{系统概念数据模型（CDM）}
+%   \label{fig:cdm}
+% \end{figure}
+
+\section{逻辑结构设计}
+\templatehint{将系统 CDM 图转换为选定的 DBMS 所支持的关系模型，并按关系规范化理论对关系模型进行优化。（此处要求列出关系模式）}
+
+\templatehint{【请在此粘贴你的 PDM，注意对联系所转换来的独立表，要添加合理的非主属性字段；同时在此写出转换后的关系模式】}
+
+\section{物理结构设计}
+\templatehint{粘贴由 PDM 生成数据库过程中的 SQL 脚本，为节省篇幅，可只保留原始脚本中的头文件和生成基本表的脚本，同时注意头文件中 DBMS 的名称应与项目背景介绍中的信息一致，并且注意头文件中系统时间的正确性。此步骤同时还需生成数据库，将生成数据库的截图拷贝到文档中，截图就是查询分析器左边树形目录所显示的数据库里生成的相应的表。}
+
+\templatehint{【请在此粘贴你的生成数据库的 SQL 脚本，并注意保留生成数据库的 SQL 脚本。同时在此粘贴生成的数据库截图拷贝，并注意保留生成的数据库文件。】}
+% 在此使用 lstlisting 环境粘贴实际 SQL；或放置独立脚本后导入：
+% \lstinputlisting[style=reportsql]{schema.sql}
+
+\section{总结}
+\templatehint{对本次课程设计的主要收获进行总结，并指出整个设计工作存在的问题或需要进行改进的地方。}
+
+\section{参考文献}
+\templatehint{如实列出对本次课程设计过程中参考了的书籍、网络文献或软件产品。}
+% 在此按顺序列出实际参考文献，例如：
+% \noindent [1] 作者. 文献名称. 出版信息.
+
+\end{document}

@@ -9,5 +9,6 @@
 | --- | --- |
 | [`EXP/EXP_1/`](EXP/EXP_1/README.md) | 项目一 SQL 语句实践 |
 | [`EXP/report(template)/`](<EXP/report(template)/>) | LaTeX 报告模板、示例代码与素材 |
+| [`CCP/report(template)/`](<CCP/report(template)/>) | 数据库设计实践项目报告 LaTeX 模板（Tectonic） |
 
 `EXP_n` 表示项目编号。项目内的各个实验、SQL、执行记录及报告统一放在对应项目目录中。
